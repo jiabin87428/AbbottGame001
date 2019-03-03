@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+	</head>
+	<script src="js/mui.js"></script>
+	<script type="text/javascript">
+		mui.init()
+		let time = 30
+		var t = time
+		
+		function startToCount(){
+			if (0 == t){
+				// location.href="http://www.jq-school.com";
+				alert('时间到')
+				start=window.clearInterval(start)
+				t = time
+			}else {
+			    t -= 1,
+			    document.getElementById("js-sec-text").innerHTML = t;
+			    var e = Math.round(t / time * 162);
+				n = document.getElementById("js-sec-circle");
+			    n.style.strokeDashoffset = e - 162
+			}
+		}
+	</script>
+
+	<body>
+		<div class="baseView">
+			<div class="clockView">
+				<svg class="alert-circle">
+					<circle cx="50" cy="50" r="25" fill="#FFF" stroke="#43AEFA" stroke-width="17"></circle>
+					<circle id="js-sec-circle" class="alert-sec-circle" cx="50" cy="50" r="25" fill="transparent" stroke="#F4F1F1" stroke-width="18" transform="rotate(-90 50 50)"></circle>
+					<!-- <text class="alert-sec-unit" x="82" y="172" fill="#BDBDBD">秒</text> -->
+				</svg>
+				<img class="bgClock" src="assets/clock.png"/>
+				<div id="js-sec-text" class="alert-sec-text"></div>
+			</div>
+			<!-- <svg class="alert-circle" width="100" height="100">
+				<circle cx="50" cy="50" r="25" fill="#FFF" stroke="#43AEFA" stroke-width="17"></circle>
+				<circle id="js-sec-circle" class="alert-sec-circle" cx="50" cy="50" r="25" fill="transparent" stroke="#F4F1F1" stroke-width="18" transform="rotate(-90 50 50)"></circle>
+				<div id="js-sec-text" class="alert-sec-text"></div>
+			</svg> -->
+			<!-- <div id="js-sec-text" class="alert-sec-text"></div> -->
+		</div>
+	</body>
+	
+	<script>
+		document.getElementById("js-sec-text").innerHTML = t;
+		var start = setInterval("startToCount()",970)
+	</script>
+	
+	<style>
+		.baseView {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: #007AFF;
+		}
+		.clockView {
+			width: 100px;
+			height: 100px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #2AC845;
+		}
+		.bgClock {
+			width: 100px;
+			height: 100px;
+		}
+		.alert-circle {
+			/* position: absolute; 
+			top: 10px;
+			left: 10px;*/
+			width: 100px;
+			height: 100px;
+			z-index: 999;
+		}
+		.alert-sec-unit {
+			font-size: 34px
+		}
+		.alert-sec-text {
+			position: absolute;
+			/* top: 25px;
+			left: 25px; */
+			width: 50px;
+			color: #777777;
+			font-size: 18px;
+			text-align: center;
+			z-index: 999;
+		}
+		.alert-sec-circle {
+			stroke-dashoffset: 0;
+			stroke-dasharray: 735;
+			transition: stroke-dashoffset 1s linear
+		}
+	</style>
+</html>
