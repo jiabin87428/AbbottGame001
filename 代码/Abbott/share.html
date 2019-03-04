@@ -18,37 +18,40 @@
 		 * @param {String} d	文档页面文件名称（doc目录下），不传入则使用页面的标题
 		 */
 		function clicked(id, t, d){
-			if(_openw){return;}  // 防止快速点击
-			var ws={
-				scrollIndicator: 'none',
-				scalable: false,
-				popGesture: 'close',
-				backButtonAutoControl: 'close',
-				titleNView: {
-					autoBackButton: true,
-					backgroundColor: '#D74B28',
-					titleColor: '#CCCCCC'
-				}
-			};
-			t&&(ws.titleNView.titleText=t,d||(d=t.toLowerCase()));
-			d&&(ws.titleNView.buttons=[{
-				fontSrc: '_www/helloh5.ttf',
-				text: '\ue301',
-				fontSize: '22px',
-				onclick: 'javascript:openDoc("/doc/'+d+'.html")'
-			}]);
-			_openw=plus.webview.create(id, id, ws);
-			_openw.addEventListener('loaded', function(){//页面加载完成后才显示
-				_openw&&_openw.show(as, null, function(){
-					_openw=null;//避免快速点击打开多个页面
-				});
-			}, false);
-			_openw.addEventListener('hide', function(){
-				_openw=null;
-			}, false);
-			_openw.addEventListener('close', function(){//页面关闭后可再次打开
-				_openw=null;
-			}, false);
+			mui.openWindow({
+				url: id,
+			});
+// 			if(_openw){return;}  // 防止快速点击
+// 			var ws={
+// 				scrollIndicator: 'none',
+// 				scalable: false,
+// 				popGesture: 'close',
+// 				backButtonAutoControl: 'close',
+// 				titleNView: {
+// 					autoBackButton: true,
+// 					backgroundColor: '#D74B28',
+// 					titleColor: '#CCCCCC'
+// 				}
+// 			};
+// 			t&&(ws.titleNView.titleText=t,d||(d=t.toLowerCase()));
+// 			d&&(ws.titleNView.buttons=[{
+// 				fontSrc: '_www/helloh5.ttf',
+// 				text: '\ue301',
+// 				fontSize: '22px',
+// 				onclick: 'javascript:openDoc("/doc/'+d+'.html")'
+// 			}]);
+// 			_openw=plus.webview.create(id, id, ws);
+// 			_openw.addEventListener('loaded', function(){//页面加载完成后才显示
+// 				_openw&&_openw.show(as, null, function(){
+// 					_openw=null;//避免快速点击打开多个页面
+// 				});
+// 			}, false);
+// 			_openw.addEventListener('hide', function(){
+// 				_openw=null;
+// 			}, false);
+// 			_openw.addEventListener('close', function(){//页面关闭后可再次打开
+// 				_openw=null;
+// 			}, false);
 		}
     </script>
 </head>
@@ -84,8 +87,9 @@
 		margin-top: 20px;
 	}
 	.ruleImage {
-		margin-top: 20px;
-		margin-bottom: 20px;
+		width: 60%;
+		margin-top: 10px;
+		margin-bottom: 10px;
 	}
 	
 	/* 设置了浏览器宽度不小于1201px时 图片显示的宽度 */ 
@@ -121,8 +125,8 @@
 			<img class="titleImage" src="assets/title.png"/>
 			<img class="subTitleImage" src="assets/subtitle.png" />
 			<img class="ruleImage" src="assets/rule.png" />
-			<button id="share.html" type="button" style="width: 100px;margin-bottom: 20px;" class="mui-btn mui-btn-warning" onclick="clicked(this.id,'大胃萌宝抢奶喝')">帮我抢奶</button>
-			<button id="share.html" type="button" style="width: 100px;margin-bottom: 20px;" class="mui-btn mui-btn-warning" onclick="clicked(this.id,'大胃萌宝抢奶喝')">游戏排行</button>
+			<button id="demo.html" type="button" style="width: 100px; margin-bottom: 20px;" class="mui-btn mui-btn-warning" onclick="clicked(this.id,'大胃萌宝抢奶喝')">帮我抢奶</button>
+			<button id="layer.html" type="button" style="width: 100px;margin-bottom: 20px;" class="mui-btn mui-btn-warning" onclick="clicked(this.id,'大胃萌宝抢奶喝')">游戏排行</button>
 		</div>
 		<img class="bgImg" src="assets/bg.png" />
 	</div>

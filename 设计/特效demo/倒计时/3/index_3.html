@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>jQuery计时器插件TimeCircles演示2</title>
+<link rel="stylesheet" href="css/TimeCircles.css" />
+</head>
+
+<body>
+<h1 style="margin: 40px; font: 32px Microsoft Yahei; text-align: center;">jQuery计时器插件TimeCircles演示2</h1>
+
+<div class="menu">
+	<a href="index.html">演示1（默认+美化）</a>
+	<a class="cur" href="index_2.html">演示2（带控制）</a>
+</div>
+
+<div class="someTimer" data-timer="900" style="width: 1000px; margin: 0 auto;"></div>
+
+<div style="text-align: center;">
+	<button class="start">开始</button>
+	<button class="stop">停止</button>
+	<button class="destroy">清除</button>
+</div>
+
+
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/TimeCircles.js"></script>
+<script>
+$(function(){
+	$('.someTimer').TimeCircles({
+		time : {
+			Days: {
+				show: false,
+				text: "天",
+				color: "#FC6"
+			},
+			Hours: {
+				show: false,
+				text: "时",
+				color: "#9CF"
+			},
+			Minutes: {
+				show: false,
+				text: "分",
+				color: "#BFB"
+			},
+			Seconds: {
+				show: true,
+				text: "秒",
+				color: "#F99"
+			}
+		}
+	});
+
+	$('.stop').click(function(){
+		$('.someTimer').TimeCircles().stop();
+	});
+
+	$('.start').click(function(){
+		$('.someTimer').TimeCircles().start();
+	});
+
+	$('.destroy').click(function(){
+		$('.someTimer').TimeCircles().destroy(); 
+	});
+});
+</script>
+
+
+
+</body>
+</html>
