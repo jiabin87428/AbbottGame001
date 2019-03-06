@@ -20,15 +20,8 @@
 		 * @param {String} d	文档页面文件名称（doc目录下），不传入则使用页面的标题
 		 */
 		function clicked(id, t, d){
-			// GWC.getUrlParams();
-			// GWC.doRedirect();
-			var param = {
-				username: "王娇龙",
-				password: "123456"
-			}
-			mAjax("POST", "http://www.gelure.com/wxlogin.do", param, function(res) {
-				alert('' + JSON.stringify(res));
-			})
+			GWC.getUrlParams();
+			GWC.doRedirect();
 			
 // 			if(_openw){return;}  // 防止快速点击
 // 			var ws={
@@ -61,25 +54,6 @@
 // 			_openw.addEventListener('close', function(){//页面关闭后可再次打开
 // 				_openw=null;
 // 			}, false);
-		}
-		
-		function mAjax(method, url, param, success) {
-			mui.ajax(url,{
-				data: param,
-				dataType: 'json',//服务器返回json格式数据
-				type: method,//HTTP请求类型
-				timeout: 10000,//超时时间设置为10秒；
-				headers: {'Content-Type':'application/json'},	              
-				success:function(data){
-					alert('成功了：' + JSON.stringify(data));
-					success(data)
-				},
-				error:function(xhr,type,errorThrown){
-					alert('出错了：' + JSON.stringify(xhr));
-					//异常处理；
-					console.log(type);
-				}
-			});
 		}
     </script>
 </head>
@@ -152,7 +126,7 @@
 			<img class="titleImage" src="assets/title.png"/>
 			<img class="subTitleImage" src="assets/subtitle.png" />
 			<img class="ruleImage" src="assets/rule.png" />
-			<button id="share.html" type="button" style="width: 100px;" class="mui-btn mui-btn-warning" onclick="clicked(this.id,'大胃萌宝抢奶喝')">点击参与</button>
+			<button id="share.html" type="button" style="width: 100px;" class="mui-btn mui-btn-warning" onclick="clicked(this.id,'大胃萌宝抢奶喝')">点击参与1</button>
 		</div>
 		<img class="bgImg" src="assets/bg.png" />
 	</div>

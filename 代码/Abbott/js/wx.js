@@ -49,7 +49,6 @@ var GWC = {
 		var redirectUri;
 
 		if (!code) {
-			alert("http://"+window.location.host+"/notify.html");
 			//第一步，没有拿到code，跳转至微信授权页面获取code
 			redirectUri = GWC.appendParams('https://open.weixin.qq.com/connect/oauth2/authorize#wechat_redirect', {
 				'appid': appid,
