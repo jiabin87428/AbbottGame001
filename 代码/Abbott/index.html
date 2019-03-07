@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title></title>
-    <script src="js/mui.min.js"></script>
+    <script src="js/mui.js"></script>
 	<script type="text/javascript" src="js/wx.js"></script>
-    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/mui.css" rel="stylesheet"/>
     <script type="text/javascript" charset="utf-8">
 		mui.init();
 		
@@ -20,40 +20,41 @@
 		 * @param {String} d	文档页面文件名称（doc目录下），不传入则使用页面的标题
 		 */
 		function clicked(id, t, d){
-			GWC.getUrlParams();
-			GWC.doRedirect();
+// 			GWC.getUrlParams();
+// 			GWC.doRedirect();
+			mui.showLoading("正在加载..","div");
 			
-// 			if(_openw){return;}  // 防止快速点击
-// 			var ws={
-// 				scrollIndicator: 'none',
-// 				scalable: false,
-// 				popGesture: 'close',
-// 				backButtonAutoControl: 'close',
-// 				titleNView: {
-// 					autoBackButton: true,
-// 					backgroundColor: '#D74B28',
-// 					titleColor: '#CCCCCC'
-// 				}
-// 			};
-// 			t&&(ws.titleNView.titleText=t,d||(d=t.toLowerCase()));
-// 			d&&(ws.titleNView.buttons=[{
-// 				fontSrc: '_www/helloh5.ttf',
-// 				text: '\ue301',
-// 				fontSize: '22px',
-// 				onclick: 'javascript:openDoc("/doc/'+d+'.html")'
-// 			}]);
-// 			_openw=plus.webview.create(id, id, ws);
-// 			_openw.addEventListener('loaded', function(){//页面加载完成后才显示
-// 				_openw&&_openw.show(as, null, function(){
-// 					_openw=null;//避免快速点击打开多个页面
-// 				});
-// 			}, false);
-// 			_openw.addEventListener('hide', function(){
-// 				_openw=null;
-// 			}, false);
-// 			_openw.addEventListener('close', function(){//页面关闭后可再次打开
-// 				_openw=null;
-// 			}, false);
+			if(_openw){return;}  // 防止快速点击
+			var ws={
+				scrollIndicator: 'none',
+				scalable: false,
+				popGesture: 'close',
+				backButtonAutoControl: 'close',
+				titleNView: {
+					autoBackButton: true,
+					backgroundColor: '#D74B28',
+					titleColor: '#CCCCCC'
+				}
+			};
+			t&&(ws.titleNView.titleText=t,d||(d=t.toLowerCase()));
+			d&&(ws.titleNView.buttons=[{
+				fontSrc: '_www/helloh5.ttf',
+				text: '\ue301',
+				fontSize: '22px',
+				onclick: 'javascript:openDoc("/doc/'+d+'.html")'
+			}]);
+			_openw=plus.webview.create(id, id, ws);
+			_openw.addEventListener('loaded', function(){//页面加载完成后才显示
+				_openw&&_openw.show(as, null, function(){
+					_openw=null;//避免快速点击打开多个页面
+				});
+			}, false);
+			_openw.addEventListener('hide', function(){
+				_openw=null;
+			}, false);
+			_openw.addEventListener('close', function(){//页面关闭后可再次打开
+				_openw=null;
+			}, false);
 		}
     </script>
 </head>
