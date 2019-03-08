@@ -43,9 +43,39 @@
 
 .rowBtnView {
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-around;/*水平居中*/
+}
+
+.shareMask {
+	position:absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.8);
+	z-index: 999;
+	color: #FFFFFF;
+	font-size: 30px;
+	text-align: center;
+	line-height: 200px;
+}
+
+.shareMaskView {
+	position:absolute;
+	width: 100%;
+	height: 100%;
+	margin-top: 20px;
+	background-color: rgba(0,0,0,0.1);
+	z-index: 999;
+	/* opacity: 0.9; */
+	color: #FFFFFF;
+	font-size: 30px;
+	text-align: center;
+	line-height: 200px;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

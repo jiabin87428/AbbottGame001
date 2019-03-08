@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul li{
+            list-style: none;
+        }
+        .banner{
+            width: 500px;
+            height: 450px;
+            margin: 100px auto;
+            position: relative;
+            perspective: 1600px;
+        }
+        
+        .banner-pic{
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            position: absolute;
+            top: 70px;
+            left: calc(50% - 150px);
+            transition: transform 0.6s;
+        }
+        .pic{
+            width: 300px;
+            height: 300px;
+        }
+        .pic1{
+            background-image: url(img/a1.png);
+            position: absolute;
+            transform: translateZ(150px);
+        }
+        .pic2{
+            background-image: url(img/a2.png);
+            position: absolute;
+            transform: translateZ(-150px) rotateX(180deg);
+        }
+        .pic3{
+            background-image: url(img/a3.png);
+            position: absolute;
+            top: 0;
+            left: -150px;
+            transform: rotateY(90deg);
+        }
+        .pic4{
+            background-image: url(img/a4.png);
+            position: absolute;
+            top: 0;
+            right: -150px;
+            transform: rotateY(90deg);
+        }
+        .pic5{
+            background-image: url(img/a5.png);
+            position: absolute;
+            top: -150px;
+            left: 0;
+            transform: rotateX(90deg);
+        }
+        .pic6{
+            background-image: url(img/a6.png);
+            position: absolute;
+            bottom: -150px;
+            left: 0;
+            transform: rotateX(-90deg);
+        }
+ 
+        .banner-view1,.banner-view11{
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            top: 70px;
+            left: calc(50% - 150px);
+            overflow: hidden;
+            transform: scale(1.105);
+        }
+        .banner-pic1{
+            width: 1800px;
+            height: 300px;
+            transition: margin-left 0.6s;
+        }
+        .pic0{
+            width: 300px;
+            height: 300px;
+            float: left;
+        }
+        .pic11,.pic111{
+            background-image: url(img/a1.png);
+        }
+        .pic22,.pic222{
+            background-image: url(img/a4.png);
+        }
+        .pic33,.pic333{
+            background-image: url(img/a2.png);
+        }
+        .pic44,.pic444{
+            background-image: url(img/a3.png);
+        }
+        .pic55,.pic555{
+            background-image: url(img/a5.png);
+        }
+        .pic66,.pic666{
+            background-image: url(img/a6.png);
+        }
+        
+        .banner-pic11{
+            width: 300px;
+            height: 300px;
+        }
+        .pic00{
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        .pic111{
+            opacity: 1;
+        }
+
+        #prev,#next{
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 4px solid #409b4e;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        #prev{
+            left: 0;
+            top: calc(50% - 25px);
+        }
+        #next{
+            right: 0;
+            top: calc(50% - 25px);
+        }
+        #prev:before,#next:before{
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: calc(50% - 18px);
+            border-radius: 6px;
+        }
+        #prev:before{
+            border-top: 6px solid skyblue; 
+            border-left: 6px solid skyblue; 
+            left: calc(50% - 14px);
+            transform: rotateZ(-45deg);
+        }
+        #next:before{
+            border-top: 6px solid skyblue; 
+            border-right: 6px solid skyblue; 
+            right: calc(50% - 14px);
+            transform: rotateZ(45deg);
+        }
+        .indicators{
+            width: 300px;
+            height: 30px;
+            position: absolute;
+            bottom: 0;
+            left: calc(50% - 150px);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .indicator{
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #f5eedc;
+            cursor: pointer;
+        }
+        .control{
+            width: 450px;
+            height: 50px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+        .control button{
+            display: block;
+            width: 125px;
+            height: 50px;
+            float: left;
+            border: 0;
+            outline: 0;
+            background-color: #3685be;
+            border-radius: 10px;
+            color: #fff;
+            transition: 0.4s;
+            cursor: pointer;
+        }
+        .control button:hover{
+            background-color: #00648f;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="banner-view1">
+            <ul class="banner-pic1">
+                <li class="pic0 pic11"></li>
+                <li class="pic0 pic22"></li>
+                <li class="pic0 pic33"></li>
+                <li class="pic0 pic44"></li>
+                <li class="pic0 pic55"></li>
+                <li class="pic0 pic66"></li>
+            </ul>
+        </div>
+        <span id="prev"></span>
+        <span id="next"></span>
+        <ul class="indicators">
+            <li class="indicator"></li>
+            <li class="indicator"></li>
+            <li class="indicator"></li>
+            <li class="indicator"></li>
+            <li class="indicator"></li>
+            <li class="indicator"></li>
+        </ul>
+    </div>
+    <div class="control">
+        <button id="btn1">3D轮播</bttton>
+        <button id="btn2">无缝轮播(默认)</bttton>
+        <button id="btn3">淡入淡出轮播</button>
+    </div>
+
+    <script>
+        var oPrev = document.getElementById("prev"),
+            oNext = document.getElementById("next"),
+            oPicbox = document.getElementsByClassName("banner-pic")[0],
+            oBall = document.getElementsByClassName("indicator"),
+            oBtn1 = document.getElementById("btn1"),
+            oBtn2 = document.getElementById("btn2"),
+            oBtn3 = document.getElementById("btn3"),
+            oBannerPic1 = document.getElementsByClassName("banner-pic1")[0];
+            oLis = oBannerPic1.getElementsByTagName("li"),
+            oBannerView1 = document.querySelector(".banner-view1"),
+            length = oLis.length;
+
+        var className1 = [
+                "pic1",
+                "pic2",
+                "pic3",
+                "pic4",
+                "pic5",
+                "pic6"
+            ],
+            className2 = [
+                "pic11",
+                "pic22",
+                "pic33",
+                "pic44",
+                "pic55",
+                "pic66"
+            ],
+            className3 = [
+                "pic111",
+                "pic222",
+                "pic333",
+                "pic444",
+                "pic555",
+                "pic666"
+            ];
+
+        var xDeg = [0,360,180,360,270,90],   //X轴方向旋转的度数
+            yDeg = [0,-90,0,90,0,0], //Y轴方向旋转的度数
+            xTranslate = [0,300,600,900,1200,1500], //X轴方向的位移
+            i = 1; //串起整个思路的全局变量
+
+        oBall[i-1].style.backgroundColor = '#ccc'; //默认最下面的第一个小球变色
+
+        oBtn1.onclick = function () {
+            oBannerView1.className = "banner-view";
+            oBannerPic1.className = "banner-pic";
+            oBannerPic1.style.cssText = "";
+            for(let i=0; i<length; i++){
+                oLis[i].className = `pic ${className1[i]}`;
+                oLis[i].style.opacity = '1';
+            }
+            change1();
+            arrow1();
+            oBannerPic1.style.cssText = 'transform: rotateX('+xDeg[i-1]+'deg)'+'rotateY('+yDeg[i-1]+'deg)';
+        };
+
+        oBtn2.onclick = function () {
+            oBannerView1.className = "banner-view1";
+            oBannerPic1.className = "banner-pic1";
+            oBannerPic1.style.cssText = "";
+            for(let i=0; i<length; i++){
+                oLis[i].className = `pic0 ${className2[i]}`;
+                oLis[i].style.opacity = '1';
+            }
+            change2();
+            arrow2();
+            oBannerPic1.style.cssText = `margin-left: ${-xTranslate[i-1]}px;`;
+        }
+
+        oBtn3.onclick = function () {
+            oBannerView1.className = "banner-view11";
+            oBannerPic1.className = "banner-pic11";
+            oBannerPic1.style.cssText = "";
+            for(let i=0; i<length; i++){
+                oLis[i].className = `pic00 ${className3[i]}`;
+                oLis[i].style.opacity = '0';
+            }
+            change3();
+            arrow3();
+            oLis[i-1].style.opacity = `1`;
+        }
+
+        function arrow1 () {  //3D轮播左右箭头方法
+            oPrev.onclick = function () { 
+                oBall[i-1].style.backgroundColor = '#f5eedc';
+                i--;
+                if(i < 1){
+                    i = 6; 
+                }
+                oBannerPic1.style.cssText = 'transform: rotateX('+xDeg[i-1]+'deg)'+'rotateY('+yDeg[i-1]+'deg)';
+                oBall[i-1].style.backgroundColor = '#ccc';
+            }
+            oNext.onclick = function () { //右箭头相同 - - 我就不说了
+                oBall[i-1].style.backgroundColor = '#f5eedc';
+                i++;
+                if(i > 6){
+                    i = 1;
+                }
+                oBannerPic1.style.cssText = 'transform: rotateX('+xDeg[i-1]+'deg)'+'rotateY('+yDeg[i-1]+'deg)';
+                oBall[i-1].style.backgroundColor = '#ccc';
+            };
+        }
+
+        arrow2();
+        function arrow2() {  //无缝轮播左右箭头方法
+            oPrev.onclick = function () { 
+                oBall[i-1].style.backgroundColor = '#f5eedc';
+                i--;
+                if(i < 1){
+                    i = 6; 
+                }
+                oBannerPic1.style.cssText = `margin-left: ${-xTranslate[i-1]}px;`;
+                oBall[i-1].style.backgroundColor = '#ccc';
+            }
+            oNext.onclick = function () {
+                oBall[i-1].style.backgroundColor = '#f5eedc';
+                i++;
+                if(i > 6){
+                    i = 1;
+                }
+                oBannerPic1.style.cssText = `margin-left: ${-xTranslate[i-1]}px;`;
+                oBall[i-1].style.backgroundColor = '#ccc';
+            };
+        }
+
+        function arrow3() { //淡入淡出轮播左右箭头方法
+            oPrev.onclick = function () { 
+                oBall[i-1].style.backgroundColor = '#f5eedc';
+                oLis[i-1].style.opacity = "0";
+                i--;
+                if(i < 1){
+                    i = 6; 
+                }
+                oLis[i-1].style.opacity = "1";
+                oBall[i-1].style.backgroundColor = '#ccc';
+            }
+            oNext.onclick = function () { 
+                oBall[i-1].style.backgroundColor = '#f5eedc';
+                oLis[i-1].style.opacity = "0";
+                i++;
+                if(i > 6){
+                    i = 1;
+                }
+                oLis[i-1].style.opacity = "1";
+                oBall[i-1].style.backgroundColor = '#ccc';
+            };
+        }
+
+/*      单边和循环模式开发
+        oPrev.onclick = function () { //左箭头的点击事件
+            oBall[i-1].style.backgroundColor = '#f5eedc'; //这是为了上个小圆点亮起时这个小圆点恢复原来的颜色
+            i--; //表示往上一个移动
+            if(i < 1){
+                if(bool){
+                    i = 6; //当i=1时还点击左箭头上移 将会把6赋给i 并把6的角度赋给XY
+                }
+                else {
+                    i = 1;
+                    alert("前面已经没有啦！");
+                }
+            }
+            oPicbox.style.transform = 'rotateX('+ xDeg[i-1] +'deg)'+'rotateY('+ yDeg[i-1] +'deg)'; //实现让立方体旋转
+            oBall[i-1].style.backgroundColor = '#ccc'; //让下方对应的新的小圆点亮起
+        };
+        oNext.onclick = function () { //右箭头相同 - - 我就不说了
+            oBall[i-1].style.backgroundColor = '#f5eedc';
+            i++;
+            if(i > 6){
+                if(bool){
+                    i = 1;
+                }
+                else {
+                    i = 6;
+                    alert("后面已经没有啦！");
+                }
+            }
+            oPicbox.style.transform = 'rotateX('+xDeg[i-1]+'deg)'+'rotateY('+yDeg[i-1]+'deg)';
+            oBall[i-1].style.backgroundColor = '#ccc';
+        };
+*/      
+
+        function change1 () { //3D轮播下方小球方法
+            for(let j=0; j<6; j++){
+                oBall[j].onmouseenter = function () {
+                    i = j+1;
+                    oBannerPic1.style.transform = 'rotateX('+xDeg[j]+'deg)'+'rotateY('+yDeg[j]+'deg)';
+                    console.log(xDeg[j]);
+                    console.log(yDeg[j]);
+                    for (let t = 0; t < 6; t++ ) {
+                        if(t+1 === i){
+                            oBall[t].style.backgroundColor = '#ccc';
+                            continue;
+                        }
+                        oBall[t].style.backgroundColor = '#f5eedc';
+                    }
+
+                }
+            }
+        }
+
+        change2();
+        function change2() { //无缝轮播下方小球方法
+            for(let j=0; j<6; j++){
+                oBall[j].onmouseenter = function () {
+                    i = j+1;
+                    oBannerPic1.style.marginLeft = `${-xTranslate[j]}px`;
+                    for (let t = 0; t < 6; t++ ) {
+                        if(t+1 === i){
+                            oBall[t].style.backgroundColor = '#ccc';
+                            continue;
+                        }
+                        oBall[t].style.backgroundColor = '#f5eedc';
+                    }
+                }
+                console.log(i);
+            }
+        }
+        
+        function change3() { //淡入淡出轮播下方小球方法
+            for(let j = 0; j<6; j++){
+                oBall[j].onmouseenter = function () {
+                    i = j+1;
+                    oLis[j].style.opacity = `1`;
+                    for (let t = 0; t < 6; t++ ) {
+                        if(t+1 === i){
+                            oBall[t].style.backgroundColor = '#ccc';
+                            oLis[t].style.opacity = `1`;
+                            continue;
+                        }
+                        oBall[t].style.backgroundColor = '#f5eedc';
+                        oLis[t].style.opacity = '0';
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

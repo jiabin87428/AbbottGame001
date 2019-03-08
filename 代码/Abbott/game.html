@@ -42,19 +42,21 @@
 		width: 20%;
 		/* height: 50px; */
 		position: absolute;
-		top: 40%;
+		/* top: 40%; */
+		bottom: 250px;
 		left: 50%;
 		margin:-25px 0 0 -25px;
 	}
 	
-	.btnClass {
+	.btnReadyClass {
 		position: absolute;
-		width: 150px;
-		height: 150px;
-		bottom: 40px;
+		width: 200px;
+		height: 144px;
+		/* height: 173px; */
+		bottom: 0px;
 		left: 50%;
-		margin-left: -75px;
-		background-image:url(assets/startBtn.png);/*背景图片*/
+		margin-left: -100px;
+		/* background-image:url(assets/startBtn.png); */
 		background-size: 100% 100%;
 		background-color:transparent;
 		border-color: transparent;
@@ -62,9 +64,31 @@
 		font-size: 26px;
 		text-align: center;
 		line-height:150px;
+		
+		background-image:url(assets/btn_game_ready.png);/*背景图片*/
 	}
+	
+	.btnClass {
+		position: absolute;
+		width: 200px;
+		height: 144px;
+		bottom: 0px;
+		left: 50%;
+		margin-left: -100px;
+		/* background-image:url(assets/startBtn.png); */
+		background-size: 100% 100%;
+		background-color:transparent;
+		border-color: transparent;
+		color: #FFFFFF;
+		font-size: 26px;
+		text-align: center;
+		line-height:150px;
+		
+		background-image:url(assets/btn_game_press.png);/*背景图片*/
+	}
+	
 	.btnClass:active {
-		background-image:url(assets/startBtn2.png);/*背景图片*/
+		background-image:url(assets/btn_game_pressDown.png);/*背景图片*/
 	}
 	
 	.numClass {
@@ -101,6 +125,12 @@
 		font-weight: 700;
 	}
 	
+	.boxView {
+		position: absolute;
+		bottom: 60px;
+		width: 100%;
+	}
+	
 	/* music */
 @-webkit-keyframes reverseRotataZ{
     0%{-webkit-transform: rotateZ(0deg);}
@@ -110,7 +140,7 @@
     0%{-webkit-transform: rotateZ(0deg);}
     100%{-webkit-transform: rotateZ(360deg);}
 }
-#musicControl { position:fixed;right:5px;top:5px;margin-top:0;display:inline-block;z-index:99999999}
+#musicControl { position:fixed;right:5px;top:100px;margin-top:0;display:inline-block;z-index:99999999}
 #musicControl a { display:inline-block;width:25px;height:25px;overflow:hidden;background:url('assets/play.png') no-repeat;background-size:100%;}
 #musicControl a audio{width:100%;height:56px;}
 #musicControl a.stop { background-position:left bottom;}
@@ -148,28 +178,48 @@
 			<img class="time" src="assets/10.png"/>
 		</div>
 		<div class="gameView">
+			<img class="boxView" src="assets/gameBox.png" />
 			<img id="readyImg" style="display:none" class="readyImg" src="assets/3.png"/>
-			<div id="readyTap" class="btnClass" onclick="readyClick()">开始游戏</div>
-			<div id="btnTap" style="display:none"  class="btnClass">点击按钮</div>
+			<div id="readyTap" class="btnReadyClass" onclick="readyClick()"></div>
+			<div id="btnTap" style="display:none"  class="btnClass"></div>
+			<audio id="clickAudio" src="assets/click.mp3" style="display:none"></audio>
+			<audio id="countDownAudio" src="assets/countDown.mp3" style="display:none"></audio>
+			<audio id="startAudio" src="assets/start.m4a" style="display:none"></audio>
+			<audio id="finishAudio" src="assets/finish.mp3" style="display:none"></audio>
 		</div>
 		<div class="numClass" id="num"></div>
 		
 		<div id="mask" class="mask">
 			<div class="maskView">
-				<label id="resultLabel" class="resultLabel"></label>
-				<button id="playAgain" type="button" style="width: 200px;height: 60px;" class="mui-btn mui-btn-warning" onclick="playAgain()">再玩一次</button>
+				<img class="maskSubView" src="assets/subBg.png" >
+				<div id="resultLabelView" class="resultLabelView">
+					<label id="resultLabel" class="resultLabel"></label>
+				</div>
+				<!-- <button id="playAgain" type="button" style="width: 200px;height: 60px;" class="mui-btn mui-btn-warning" onclick="playAgain()">再玩一次</button> -->
+				<img class="btnImage" src="assets/btn_play_again.png" onclick="playAgain()"/>
+				<div class="rowBtnView">
+					<img class="btnImage" src="assets/btn_help.png" onclick="showShare()"/>
+					<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('point.html','大胃萌宝抢奶喝')"/>
+				</div>
+				<label id="timeLabel" class="resultLabel">剩余游戏机会：1次</label>
+			</div>
+		</div>
+		
+		<div id="shareMask" class="shareMask" onclick="hideShare()">
+			<div class="shareMaskView">
+				<img class="maskSubView" src="assets/helpBg.png" >
 			</div>
 		</div>
 		
 		<span id="musicControl">
 			<a id="mc_play" class="on" onclick="play_music();">
 				<audio id="musicfx" loop="loop" autoplay="autoplay">
-					<source src="assets/testmusic.mp3" type="audio/mpeg">
+					<source src="assets/bgm.m4a" type="audio/mpeg">
 				</audio>
 			</a>
 		</span>
 	</div>
-	<img class="bgImg" src="assets/bg.jpg" />
+	<img class="bgImg" src="assets/gamebg.jpg" />
 </body>
 
 <script type="text/javascript">
@@ -180,14 +230,29 @@
 	];
 	mui.init();
 	mask.style.display = "none";
+	shareMask.style.display = "none";
 	// mask.style.left = '100%';
 	btnTap.addEventListener('tap', function(event) {
 		let num = randomNum(0,2);
 		var para = ctrateAnimat(num);
+		// showSound("assets/click.mp3");
+		clickAudio.play();
 		if(para != null) {
 			para.start();
 		}
 	},false);
+
+	/**
+	 * 产生音效
+	 * @param audioSrc ：音频路径
+	 */
+	function showSound(audioSrc) {
+		/**因为音效元素是追加的，所以每次生成之前，将原来的删除掉*/
+		$("#hint").remove();
+		/**创建audio标签的Jquery对象，然后追加到body进行播放即可*/
+		let audioJQ = $("<audio src='" + audioSrc + "' autoplay id='hint'/>");
+		audioJQ.appendTo("body");
+	}
 	
 	var itemId = 100;
 	var idNum = 0;
@@ -201,6 +266,7 @@
 		isGaming = false;
 		readyTime = 3;
 		readyTimer = setInterval("readyCountDown()", 1000); 
+		var play = setTimeout("countDownAudio.play()",700);
 		readyTap.style.display = "none";
 		btnTap.style.display = "";
 	}
@@ -210,13 +276,14 @@
 			isGaming = false;
 			readyImg.style.display=""
 			if (readyTime == 3) {
-				readyImg.src = "assets/3.png"
+				readyImg.src = "assets/3.png";
 			}else if (readyTime == 2) {
-				readyImg.src = "assets/2.png"
+				readyImg.src = "assets/2.png";
 			}else if (readyTime == 1) {
-				readyImg.src = "assets/1.png"
+				readyImg.src = "assets/1.png";
 			}else {
-				readyImg.src = "assets/go.png"
+				readyImg.src = "assets/go.png";
+				startAudio.play();
 			}
 			minutes = Math.floor(readyTime / 60);
 			seconds = Math.floor(readyTime % 60);
@@ -228,7 +295,12 @@
 			readyImg.style.display="none"
 			isGaming = true;
 			countDown(function() {
-				resultLabel.innerHTML = '游戏结束 共点击了：\n' + idNum + "次";
+				finishAudio.play();
+				// resultLabel.innerHTML = '游戏结束 共点击了：\n' + idNum + "次";
+				let xasNum = result[0].num;
+				let jzNum = result[1].num;
+				let emlNum = result[2].num;
+				resultLabel.innerHTML = '恭喜你已获得' + xasNum + '罐小安素,' + jzNum + '罐菁挚，' + emlNum + '罐恩美力<br>离大奖就差一点点了<br>快分享给好友，为你助力吧！';
 				isGaming = false;
 				
 				mask.style.display = "";
@@ -305,6 +377,15 @@
 		return boll;
 	}
 	
+	// 展示分享方法
+	function showShare() {
+		shareMask.style.display = "";
+	}
+	// 隐藏分享方法
+	function hideShare() {
+		shareMask.style.display = "none";
+	}
+	
 	// 再玩一次
 	function playAgain() {
 		gameInit();
@@ -326,7 +407,22 @@
 		mask.style.display = "none";
 		
 		$(".time").attr("src","assets/10.png");
-		// mask.style.left = '100%';
+		
+		result = [
+			{'name': '小安素', 'num': 0},
+			{'name': '菁挚', 'num': 0},
+			{'name': '恩美力', 'num': 0},
+		];
+		$("#score0").html("X0");
+		$("#score1").html("X0");
+		$("#score2").html("X0");
+	}
+	
+	// 跳转页面
+	function jumpPage(id, t, d){
+		mui.openWindow({
+			url: id,
+		});
 	}
 	
 	//生成从minNum到maxNum的随机数
