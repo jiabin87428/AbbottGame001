@@ -1,0 +1,51 @@
+.bgImg {
+	width: 100%;
+	height: 100%;
+}
+
+.closeBtn {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	top: 10px;
+	right: 10px;
+}
+
+.downBtn {
+	margin-top: 20px;
+	width: 40px;
+}
+
+.noticeView {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;/*水平居中*/
+}
+.noticeImg{
+	/* width: 60%; */
+	height: 70%;
+}
+
+.btnImage {
+	width: 40%;
+	margin-top: 15px;
+}
+
+.ruleImage {
+	position: absolute;
+	top: 0px;
+	left: 10px;
+	width: 15%;
+}
+
+.rowBtnView {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;/*水平居中*/
+}

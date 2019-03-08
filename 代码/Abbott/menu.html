@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>大胃萌宝抢奶喝</title>
+    <script src="js/mui.js"></script>
+	<script type="text/javascript" src="js/wx.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+    <link href="css/mui.css" rel="stylesheet"/>
+	<link href="css/common.css" rel="stylesheet" />
+    <script type="text/javascript" charset="utf-8">
+		mui.init();
+		
+		var showAlert = 1;	// 	1.显示游戏规则 2.显示奖励机制 3.显示产品信息 4.显示免责申明
+		
+		// 处理点击事件
+		var _openw=null;
+		var as='pop-in';// 默认窗口动画
+		/**
+		 * 打开新窗口
+		 * @param {String} id	加载的页面地址，也用作窗口标识
+		 * @param {String} t    页面的标题
+		 * @param {String} d	文档页面文件名称（doc目录下），不传入则使用页面的标题
+		 */
+		function clicked(id, t, d){
+// 			GWC.getUrlParams();
+// 			GWC.doRedirect();
+			// mui.showLoading("正在加载..","div");
+			
+			mui.openWindow({
+				url: id,
+			});
+			
+// 			if(_openw){return;}  // 防止快速点击
+// 			var ws={
+// 				scrollIndicator: 'none',
+// 				scalable: false,
+// 				popGesture: 'close',
+// 				backButtonAutoControl: 'close',
+// 				titleNView: {
+// 					autoBackButton: true,
+// 					backgroundColor: '#D74B28',
+// 					titleColor: '#CCCCCC'
+// 				}
+// 			};
+// 			t&&(ws.titleNView.titleText=t,d||(d=t.toLowerCase()));
+// 			d&&(ws.titleNView.buttons=[{
+// 				fontSrc: '_www/helloh5.ttf',
+// 				text: '\ue301',
+// 				fontSize: '22px',
+// 				onclick: 'javascript:openDoc("/doc/'+d+'.html")'
+// 			}]);
+// 			_openw=plus.webview.create(id, id, ws);
+// 			_openw.addEventListener('loaded', function(){//页面加载完成后才显示
+// 				_openw&&_openw.show(as, null, function(){
+// 					_openw=null;//避免快速点击打开多个页面
+// 				});
+// 			}, false);
+// 			_openw.addEventListener('hide', function(){
+// 				_openw=null;
+// 			}, false);
+// 			_openw.addEventListener('close', function(){//页面关闭后可再次打开
+// 				_openw=null;
+// 			}, false);
+		}
+		
+		function showProduct() {
+			$(".maskView").animate(
+			　　{opacity:'toggle'},
+			　　"slow",
+			　　null,
+			　　function(){
+			　　　　$(".maskView").show();
+			　　}
+			);
+		}
+		
+		function hideProduct() {
+			$(".maskView").animate(
+			　　{opacity:'toggle'},
+			　　"slow",
+			　　null,
+			　　function(){
+					$(".maskView").hide();
+					showAlert = 1;
+					setMaskState(showAlert)
+			　　}
+			);
+		}
+		
+		function scrollToNext() {
+			setMaskState(showAlert);
+			if (showAlert < 4) {
+				showAlert++;
+			}
+		}
+		
+		function setMaskState(num) {
+			var src = "";
+			if (num == 1) {
+				src = "assets/yxgz.png";
+			}else if (num == 2) {
+				src = "assets/jljz.png";
+			}else if (num == 3) {
+				src = "assets/cpxx.png";
+			}else if (num == 4) {
+				src = "assets/mzsm.png";
+			}
+			$(".noticeImg").animate(
+			　　{opacity:'toggle'},
+			　　"fast",
+			　　null,
+			　　function(){
+			　　　　$(".noticeImg").attr("src",src);
+			　　　　$(".noticeImg").animate({opacity:'toggle'},"fast");
+			　　}
+			);
+		}
+    </script>
+</head>
+<style>
+	body {
+           background:green;
+           padding-top: constant(safe-area-inset-top);
+           /*padding-left: constant(safe-area-inset-left);*/            
+           /*padding-right: constant(safe-area-inset-right);*/            
+           /*padding-bottom: constant(safe-area-inset-bottom);*/        
+       }
+	
+	.baseView {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+	.bgImg {
+		width: 100%;
+		height: 100%;
+		
+	}
+	.columnView {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.titleImage {
+		margin-top: 40px;
+	}
+	.subTitleImage {
+		margin-top: 0px;
+	}
+	
+	.ruleImage {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+	
+	.maskView {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		/* background-color: #000000; */
+		z-index: 999;
+		background-color: rgba(0,0,0,0.8);
+		
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;/*水平居中*/
+	}
+	
+	/* 设置了浏览器宽度不小于1201px时 图片显示的宽度 */ 
+ 
+	@media screen and (min-width: 1201px) { 
+		.titleImage {
+			width: 300px;
+		} 
+		.subTitleImage {
+			width: 100%;
+		}
+		.ruleImage {
+			
+		}
+	}
+	
+/* 设置了浏览器宽度不大于1200px时 图片显示的宽度 */ 
+	@media screen and (max-width: 1200px) { 
+		.titleImage {
+			width: 320px;
+		} 
+		.subTitleImage {
+			width: 100%;
+		}
+		.ruleImage {
+			
+		}
+	}
+</style>
+<body>
+	<div class="baseView">
+		<div id="maskView" class="maskView">
+			<img class="closeBtn" src="assets/close.png"  onclick="hideProduct()"/>
+			<img id="noticeImg" class="noticeImg" src="assets/yxgz.png"/>
+			<img id="downBtn" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext()" />
+		</div>
+		
+		<div class="columnView">
+			<img class="titleImage" src="assets/logo.png"/>
+			<img class="subTitleImage" src="assets/chick.png" onclick="showProduct()"/>
+			<!-- <img class="btnImage" src="assets/btn_join.png" onclick="clicked('share.html','大胃萌宝抢奶喝')"/> -->
+			<img class="btnImage" src="assets/btn_play.png" onclick="clicked('game.html','大胃萌宝抢奶喝')"/>
+			<div class="rowBtnView">
+				<img class="btnImage" src="assets/btn_help.png" onclick=""/>
+				<img class="btnImage" src="assets/btn_point.png" onclick=""/>
+			</div>
+		</div>
+		<img class="bgImg" src="assets/bg.jpg" />
+		
+		<img class="ruleImage" src="assets/gz.png" onclick="showProduct()"/>
+	</div>
+	
+</body>
+<script type="text/javascript">	
+	$(".maskView").hide();
+</script>
+</html>

@@ -8,12 +8,12 @@ i = 0;
 j = 0;
 count = 0;
 MM = 0;
-SS = 30;  // 秒 30s
+SS = 10;  // 秒 30s
 MS = 0;
 totle = (MM+1)*600;
 d = 180*(MM+1);
 MM = "0" + MM;
-var gameTime = 30;
+var gameTime = 10;
 var completeFun = null;
 //count down
 var showTime = function(){
@@ -21,7 +21,9 @@ var showTime = function(){
     if (totle == 0) {
         clearInterval(s);
         clearInterval(t1);
+		
 		completeFun();
+		
 		// alert('时间到');
         // clearInterval(t2);
 //         $(".pie2").css("-o-transform", "rotate(" + d + "deg)");
@@ -56,7 +58,9 @@ var showTime = function(){
         ;
     }
     ;
-    $(".time").html(SS + "s");
+    // $(".time").html(SS + "s");
+	// console.log("../assets/" + SS + ".png")
+	$(".time").attr("src","./assets/" + SS + ".png");
 	
 };
 
@@ -69,7 +73,8 @@ var start1 = function(){
 		$(".pie1").css("-moz-transform","rotate(" + i + "deg)");
 		$(".pie1").css("-webkit-transform","rotate(" + i + "deg)");
 	}else{
-		$(".pie2").css("backgroundColor", "#d13c36");
+		// $(".pie2").css("backgroundColor", "#5953BC");
+		$(".pie2").css("background", "radial-gradient(circle, #5953BC, #5953BC)");
 		$(".pie2").css("-o-transform","rotate(" + i + "deg)");
 		$(".pie2").css("-moz-transform","rotate(" + i + "deg)");
 		$(".pie2").css("-webkit-transform","rotate(" + i + "deg)");
@@ -115,7 +120,8 @@ var resetCount = function() {
 	$(".pie1").css("-moz-transform","rotate(0deg)");
 	$(".pie1").css("-webkit-transform","rotate(0deg)");
 	
-	$(".pie2").css("backgroundColor", "#FFFFFF");
+	$(".pie2").css("backgroundColor", "#00C321");
+	$(".pie2").css("background", "radial-gradient(circle, #00FA27, #00C321)");
 	$(".pie2").css("-o-transform","rotate(0deg)");
 	$(".pie2").css("-moz-transform","rotate(0deg)");
 	$(".pie2").css("-webkit-transform","rotate(0deg)");
