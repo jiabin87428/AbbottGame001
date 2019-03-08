@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!--禁止双击放大页面-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>圆形时间进度条-倒计时</title>
+<title>大胃萌宝抢奶喝</title>
 
 <script src="js/mui.min.js"></script>
 <link href="css/mui.min.css" rel="stylesheet"/>
@@ -131,6 +131,26 @@
 		width: 100%;
 	}
 	
+	/* 设置了浏览器高度不大于1000px时 图片显示的宽度 */ 
+	@media screen and (max-height: 1000px) { 
+		.maskSubView {
+			width: 100%;
+		} 
+		.shareSubView {
+			width: 80%;
+		}
+	}
+	
+	/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
+	@media screen and (max-height: 600px) { 
+		.maskSubView {
+			width: 60%;
+		} 
+		.shareSubView {
+			width: 80%;
+		}
+	}
+	
 	/* music */
 @-webkit-keyframes reverseRotataZ{
     0%{-webkit-transform: rotateZ(0deg);}
@@ -207,7 +227,7 @@
 		
 		<div id="shareMask" class="shareMask" onclick="hideShare()">
 			<div class="shareMaskView">
-				<img class="maskSubView" src="assets/helpBg.png" >
+				<img class="shareSubView" src="assets/helpBg.png" >
 			</div>
 		</div>
 		
