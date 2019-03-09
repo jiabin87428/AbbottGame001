@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>大胃萌宝抢奶喝</title>
+		<script src="js/mui.js"></script>
+		<script type="text/javascript" src="js/wx.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<link href="css/mui.css" rel="stylesheet"/>
+		<link href="css/common.css" rel="stylesheet" />
+	</head>
+	<style>
+		.phbgView {
+			position: relative;
+			width: 90%;
+			margin-top: -50px;
+			
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+		.phListView {
+			position: absolute;
+			width: 85%;
+			height: 92%;
+			/* background-color: #0000FF; */
+			
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+		.phItemView_jz {
+			position: relative;
+			width: 95%;
+			height: 7%;
+			margin-top: 15px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			
+			background-image: url(assets/ph_jz_itemBg.png);
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			-moz-background-size: 100% 100%;
+		}
+		.phItemView_eml {
+			position: relative;
+			width: 95%;
+			height: 7%;
+			margin-top: 15px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			
+			background-image: url(assets/ph_eml_itemBg.png);
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			-moz-background-size: 100% 100%;
+		}
+		.phItemView_xas {
+			position: relative;
+			width: 95%;
+			height: 7%;
+			margin-top: 15px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			
+			background-image: url(assets/ph_xas_itemBg.png);
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			-moz-background-size: 100% 100%;
+		}
+		.phItemView2 {
+			position: relative;
+			width: 95%;
+			height: 7%;
+			margin-top: 15px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+		}
+		.phItemHeadImg {
+			width: auto;
+			height: 120%;
+			border-radius: 50%;
+			margin-top: -5px;
+		}
+		.phItemHgImg {
+			position: absolute;
+			/* width: 100%; */
+			top: -90%;
+			left: -7%;
+		}
+		.phItemScore_jz {
+			width: 100%;
+			color: #007600;
+			margin-left: 20px;
+			margin-top: -5px;
+		}
+		.phItemScore_eml {
+			width: 100%;
+			color: #BF9B65;
+			margin-left: 20px;
+			margin-top: -5px;
+		}
+		.phItemScore_xas {
+			width: 100%;
+			color: #FFFFFF;
+			margin-left: 20px;
+			margin-top: -5px;
+		}
+		.phItemMCImg {
+			width: auto;
+			height: 60%;
+			margin-top: -5px;
+			margin-right: 20px;
+		}
+		.phItemMCLabel_jz {
+			width: 50%;
+			font-size: 18px;
+			text-align: right;
+			margin-right: 20px;
+			margin-top: -5px;
+			color: #FFEC00;
+			font-weight: bold;
+			/* text-shadow: 0 0 0.2em #F87, 0 0 0.2em #F87; */
+		}
+		.phItemMCLabel_eml {
+			width: 50%;
+			font-size: 18px;
+			text-align: right;
+			margin-right: 20px;
+			margin-top: -5px;
+			color: #CEB666;
+			font-weight: bold;
+			/* text-shadow: 0 0 0.2em #F87, 0 0 0.2em #F87; */
+		}
+		.phItemMCLabel_xas {
+			width: 50%;
+			font-size: 18px;
+			text-align: right;
+			margin-right: 20px;
+			margin-top: -5px;
+			color: #FFFFFF;
+			font-weight: bold;
+			/* text-shadow: 0 0 0.2em #F87, 0 0 0.2em #F87; */
+		}
+		.phItemMyImg {
+			height: 80%;
+		}
+		
+		/* 设置了浏览器高度不大于1000px时 图片显示的宽度 - 高分辨率*/ 
+		@media screen and (max-height: 1000px) { 
+			.phbgView {
+				width: 90%;
+			}
+			.phItemScore_jz{
+				
+			}
+		}
+		
+		/* 设置了浏览器高度不大于900px时 图片显示的宽度 - 低分辨率*/ 
+		@media screen and (max-height: 600px) { 
+			.phbgView {
+				width: 70%;
+			}
+			.phItemScore_jz {
+				font-size: 10px;
+			}
+			.phItemView_jz {
+				height: 17%;
+			}
+			.phItemScore_eml {
+				font-size: 10px;
+			}
+			.phItemView_eml {
+				height: 17%;
+			}
+			.phItemScore_xas {
+				font-size: 10px;
+			}
+			.phItemView_xas {
+				height: 17%;
+			}
+			.phItemMCLabel_jz {
+				font-size: 14px;
+			}
+			.phItemMCLabel_eml {
+				font-size: 14px;
+			}
+			.phItemMCLabel_xas {
+				font-size: 14px;
+			}
+			.phItemMyImg {
+				width: auto;
+				height: 100%;
+			}
+		}
+	</style>
+	<body>
+		<div class="baseViewColumn">
+			<img id="titleImg" class="titleImgView" src="assets/ph_jz_title.png"/>
+			<div class="phbgView">
+				<img id="bgImg" class="titleImgView" src="assets/ph_jz_Bg.png"/>
+				<div id="cellList" class="phListView">
+					<!-- <div class="phItemView">
+						<img class="phItemHgImg" src="assets/ph_hg_0.png" />
+						<img class="phItemHeadImg" src="http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg"/>
+						<label class="phItemScore">安迪 999瓶</label>
+						<img class="phItemMCImg" src="assets/ph_no1.png"/>
+					</div>
+					
+					<div class="phItemView">
+						<img class="phItemHgImg" src="assets/ph_hg_1.png" />
+						<img class="phItemHeadImg" src="http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg"/>
+						<label class="phItemScore">安迪 998瓶</label>
+						<img class="phItemMCImg" src="assets/ph_no2.png"/>
+					</div>
+					
+					<div class="phItemView">
+						<img class="phItemHgImg" src="assets/ph_hg_2.png" />
+						<img class="phItemHeadImg" src="http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg"/>
+						<label class="phItemScore">安迪 997瓶</label>
+						<img class="phItemMCImg" src="assets/ph_no3.png"/>
+					</div>
+					
+					<div class="phItemView">
+						<img class="phItemHeadImg" src="http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg"/>
+						<label class="phItemScore">安迪 997瓶</label>
+						<label class="phItemMCLabel">NO.4</label>
+					</div>
+					<div class="phItemView">
+						<img class="phItemHeadImg" src="http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg"/>
+						<label class="phItemScore">安迪 997瓶</label>
+						<label class="phItemMCLabel">NO.5</label>
+					</div>
+					<div class="phItemView">
+						<img class="phItemHeadImg" src="http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg"/>
+						<label class="phItemScore">安迪 997瓶</label>
+						<label class="phItemMCLabel">NO.6</label>
+					</div>
+					<div class="phItemView">
+						<img class="phItemHeadImg" src="http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg"/>
+						<label class="phItemScore">安迪 997瓶</label>
+						<label class="phItemMCLabel">NO.7</label>
+					</div>
+					<div class="phItemView">
+						<img class="phItemHeadImg" src="http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg"/>
+						<label class="phItemScore">安迪 997瓶</label>
+						<label class="phItemMCLabel">NO.8</label>
+					</div>
+					<div class="phItemView2">
+						<img class="phItemMyImg" src="assets/ph_jz_wdpm.png"/>
+					</div>
+					<div class="phItemView">
+						<img class="phItemHeadImg" src="http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg"/>
+						<label class="phItemScore">安迪 997瓶</label>
+						<label class="phItemMCLabel">NO.888</label>
+					</div> -->
+				</div>
+			</div>
+			<img class="btnImage" src="assets/btn_back.png" onClick="backClick()"></img>
+		</div>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		
+		// var pageType = 1;// 1.菁挚 2.恩美力 3.小安素
+		var pageType = getUrlParam("pageType"); // 1.菁挚 2.恩美力 3.小安素
+		
+		$("body").ready(function () {
+			if (pageType == 1) {
+				$("#titleImg").attr("src", "assets/ph_jz_title.png");
+				$("#bgImg").attr("src", "assets/ph_jz_Bg.png");
+			}else if (pageType == 2) {
+				$("#titleImg").attr("src", "assets/ph_eml_title.png");
+				$("#bgImg").attr("src", "assets/ph_eml_Bg.png");
+			}else {
+				$("#titleImg").attr("src", "assets/ph_xas_title.png");
+				$("#bgImg").attr("src", "assets/ph_xas_Bg.png");
+			}
+			
+			var headImg = 'http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg';
+			var name = '安迪';
+			var score = '999999';
+			
+			createCell(headImg, name, score, 1);
+			createCell(headImg, name, score, 2);
+			createCell(headImg, name, score, 3);
+			createCell(headImg, name, score, 4);
+			createCell(headImg, name, score, 5);
+			createCell(headImg, name, score, 6);
+			createCell(headImg, name, score, 7);
+			createCell(headImg, name, score, 8);
+			createMyCellLine();
+			createCell(headImg, name, score, 88);
+		})
+		
+		// 生成cell
+		/* headImg	头像链接
+		 * name		昵称
+		 * score	分数
+		 * ranking	排名
+		 */
+		function createCell(headImg, name, score, ranking){
+			var div = document.createElement("div");  
+			if (pageType == 1) {
+				div.className = 'phItemView_jz';
+			}else if (pageType == 2) {
+				div.className = 'phItemView_eml';
+			}else if (pageType == 3) {
+				div.className = 'phItemView_xas';
+			}
+			
+			if (ranking == 1) {
+				var phItemHgImg = document.createElement("img");
+				phItemHgImg.className = 'phItemHgImg';
+				phItemHgImg.src = 'assets/ph_hg_0.png';
+				div.appendChild(phItemHgImg);
+			}else if (ranking == 2) {
+				var phItemHgImg = document.createElement("img");
+				phItemHgImg.className = 'phItemHgImg';
+				phItemHgImg.src = 'assets/ph_hg_1.png';
+				div.appendChild(phItemHgImg);
+			}else if (ranking == 3) {
+				var phItemHgImg = document.createElement("img");
+				phItemHgImg.className = 'phItemHgImg';
+				phItemHgImg.src = 'assets/ph_hg_2.png';
+				div.appendChild(phItemHgImg);
+			}
+			
+			var phItemHeadImg = document.createElement("img");
+			phItemHeadImg.className = 'phItemHeadImg';
+			phItemHeadImg.src = headImg;
+			div.appendChild(phItemHeadImg);
+			
+			var phItemScore = document.createElement("label");
+			if (pageType == 1) {
+				phItemScore.className = 'phItemScore_jz';
+			}else if (pageType == 2) {
+				phItemScore.className = 'phItemScore_eml';
+			}else if (pageType == 3) {
+				phItemScore.className = 'phItemScore_xas';
+			}
+			phItemScore.innerHTML = name + ' ' + score + '瓶';
+			div.appendChild(phItemScore);
+			
+			if (ranking == 1) {
+				var phItemMCImg = document.createElement("img");
+				phItemMCImg.className = 'phItemMCImg';
+				phItemMCImg.src = 'assets/ph_no1.png';
+				div.appendChild(phItemMCImg);
+			}else if (ranking == 2) {
+				var phItemMCImg = document.createElement("img");
+				phItemMCImg.className = 'phItemMCImg';
+				phItemMCImg.src = 'assets/ph_no2.png';
+				div.appendChild(phItemMCImg);
+			}else if (ranking == 3) {
+				var phItemMCImg = document.createElement("img");
+				phItemMCImg.className = 'phItemMCImg';
+				phItemMCImg.src = 'assets/ph_no3.png';
+				div.appendChild(phItemMCImg);
+			}else {
+				var phItemMCLabel = document.createElement("label");
+				if (pageType == 1) {
+					phItemMCLabel.className = 'phItemMCLabel_jz';
+				}else if (pageType == 2) {
+					phItemMCLabel.className = 'phItemMCLabel_eml';
+				}else if (pageType == 3) {
+					phItemMCLabel.className = 'phItemMCLabel_xas';
+				}
+				phItemMCLabel.innerHTML = 'NO.' + ranking;
+				div.appendChild(phItemMCLabel);
+			}
+			// alert('' + JSON.stringify(div));
+			cellList.appendChild(div);
+			// $("cellList").append(div);         // 追加新元素
+		}
+		
+		// 创建我的分数分割线
+		function createMyCellLine() {
+			var div = document.createElement("div");  
+			div.className = 'phItemView2';
+			
+			var phItemMyImg = document.createElement("img");
+			phItemMyImg.className = 'phItemMyImg';
+			if (pageType == 1) {
+				phItemMyImg.src = 'assets/ph_jz_wdpm.png';
+			}else if (pageType == 2) {
+				phItemMyImg.src = 'assets/ph_eml_wd.png';
+			}else if (pageType == 3) {
+				phItemMyImg.src = 'assets/ph_xas_wd.png';
+			}
+			div.appendChild(phItemMyImg);
+			
+			cellList.appendChild(div);
+		}
+		
+		function backClick() {
+			mui.back();
+		}
+		
+		function pageJump(id, t, d){
+			mui.openWindow({
+				url: id,
+				show:{
+				  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+				},
+			});
+		}
+	</script>
+</html>

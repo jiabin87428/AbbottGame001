@@ -14,7 +14,16 @@
 		
 		var showAlert = 1;	//  显示产品信息-1 2 3 4
 		var rule = 1;	// 	显示游戏规则-1 2 3
-
+		
+		$("body").ready(function () {
+			$("#maskView").hide();
+			$("#ruleMask").hide();
+			$("#joinBtn").click(function () {
+				alert('点击参与按钮');
+				document.getElementById("<%=btnAgree.ClientID %>").click();
+		    })
+		})
+		
 		/**
 		 * 打开新窗口
 		 * @param {String} id	加载的页面地址，也用作窗口标识
@@ -27,6 +36,9 @@
 // 			mui.showLoading("正在加载..","div");
 			mui.openWindow({
 				url: id,
+				show:{
+				  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+				},
 			});
 		}
 		// 展示产品
@@ -153,7 +165,7 @@
 		align-items: center;
 	}
 	.titleImage {
-		margin-top: 40px;
+		/* margin-top: 40px; */
 	}
 	.subTitleImage {
 		margin-top: 0px;
@@ -213,7 +225,7 @@
 			width: 100%;
 		}
 		.btnImage {
-			margin-top: 50px;
+			margin-top: 20px;
 		}
 		.ruleImage {
 			
@@ -223,7 +235,7 @@
 	/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
 	@media screen and (max-height: 600px) { 
 		.titleImage {
-			width: 60%;
+			width: 80%;
 		} 
 		.subTitleImage {
 			width: 100%;
@@ -250,7 +262,8 @@
 		<div class="columnView">
 			<img class="titleImage" src="assets/logo.png"/>
 			<img class="subTitleImage" src="assets/chick.png" onclick="showProduct()"/>
-			<img class="btnImage" src="assets/btn_join.png" onclick="clicked('menu.html','大胃萌宝抢奶喝')"/>
+			<img class="btnImage" src="assets/btn_join.png" onclick="clicked('menu.html?targetId=andy','大胃萌宝抢奶喝')"></img>
+			<img class="btnImage" src="assets/btn_join.png" onclick="clicked('menu.html','大胃萌宝抢奶喝')"></img>
 		</div>
 		<img class="bgImg" src="assets/bg.jpg" />
 		
@@ -258,8 +271,4 @@
 	</div>
 	
 </body>
-<script type="text/javascript">	
-	$("#maskView").hide();
-	$("#ruleMask").hide();
-</script>
 </html>

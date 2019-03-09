@@ -7,6 +7,7 @@
     <script src="js/mui.js"></script>
 	<script type="text/javascript" src="js/wx.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
     <link href="css/mui.css" rel="stylesheet"/>
 	<link href="css/common.css" rel="stylesheet" />
     <script type="text/javascript" charset="utf-8">
@@ -14,6 +15,24 @@
 		
 		var showAlert = 1;	//  显示产品信息-1 2 3 4
 		var rule = 1;	// 	显示游戏规则-1 2 3
+		
+		var targetID = getUrlParam("targetId");
+		
+		$("body").ready(function () {
+			$("#maskView").hide();
+			$("#ruleMask").hide();
+			if (targetID == null) {
+				$("#help1").hide();
+				$("#help2").hide();
+				$("#help3").hide();
+				console.log('没有传过来的ID，此页为用户自己的游戏页');
+			}else {
+				$("#play1").hide();
+				$("#play2").hide();
+				console.log('传过来的ID:' + targetID + '此页为助力页');
+				
+			}
+		})
 		
 		/**
 		 * 打开新窗口
@@ -128,8 +147,8 @@
 </head>
 <style>
 	body {
-           background:green;
-           padding-top: constant(safe-area-inset-top);
+           /* background:green; */
+           /* padding-top: constant(safe-area-inset-top); */
            /*padding-left: constant(safe-area-inset-left);*/            
            /*padding-right: constant(safe-area-inset-right);*/            
            /*padding-bottom: constant(safe-area-inset-bottom);*/        
@@ -153,7 +172,7 @@
 		align-items: center;
 	}
 	.titleImage {
-		margin-top: 40px;
+		/* margin-top: 40px; */
 	}
 	.subTitleImage {
 		margin-top: 0px;
@@ -175,6 +194,39 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;/*水平居中*/
+	}
+	
+	.targetRanking {
+		padding: 5px 5px 5px 5px;
+		border-radius: 30px;
+		vertical-align: middle;
+		text-align: center;
+		color: #FFFFFF;
+		font-size: 14px;
+		font-weight: 700;
+		background-color: rgba(203,103,254,0.7);
+	}
+	.helpView {
+		padding: 5px 5px 5px 5px;
+		border-radius: 10px;
+		background-color: rgba(255,255,255,0.8);
+		
+		width: 80%;
+		/* height: 200px; */
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;/*水平居中*/
+	}
+	.helpImg {
+		width: 100%;
+	}
+	.helpLabel {
+		vertical-align: middle;
+		text-align: center;
+		color: #8403FD;
+		font-size: 14px;
+		font-weight: 700;
 	}
 	
 	/* 设置了浏览器宽度不小于1201px时 图片显示的宽度 */ 
@@ -213,7 +265,7 @@
 			width: 100%;
 		}
 		.btnImage {
-			margin-top: 50px;
+			margin-top: 20px;
 		}
 		.ruleImage {
 			
@@ -223,15 +275,16 @@
 	/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
 	@media screen and (max-height: 600px) { 
 		.titleImage {
-			width: 60%;
+			width: 80%;
 		} 
 		.subTitleImage {
-			width: 100%;
+			width: 70%;
 		}
 		.ruleImage {
 			
 		}
 	}
+	
 </style>
 <body>
 	<div class="baseView">
@@ -249,21 +302,25 @@
 		
 		<div class="columnView">
 			<img class="titleImage" src="assets/logo.png"/>
+			<label id="help1" class="targetRanking">安迪目前排名No.999</label>
 			<img class="subTitleImage" src="assets/chick.png" onclick="showProduct()"/> -->
-			<img class="btnImage" src="assets/btn_play.png" onclick="clicked('game.html','大胃萌宝抢奶喝')"/>
-			<div class="rowBtnView">
+			<div id="help2" class="helpView">
+				<label id="helpLabel" class="helpLabel">已有99人为TA助力</label>
+				<img class="helpImg" src="assets/helpChicks.png"/>
+			</div>
+			<img id="play1" class="btnImage" src="assets/btn_play.png" onclick="clicked('game.html','大胃萌宝抢奶喝')"/>
+			<div id="play2" class="rowBtnView">
 				<img class="btnImage" src="assets/btn_help.png" onclick=""/>
-				<img class="btnImage" src="assets/btn_point.png" onclick="clicked('point.html','大胃萌宝抢奶喝')"/>
+				<img class="btnImage" src="assets/btn_point.png" onclick="clicked('myPoint.html','大胃萌宝抢奶喝')"/>
+			</div>
+			<div id="help3" class="rowBtnView">
+				<img class="btnImage" src="assets/btn_wtzl.png" onclick="clicked('game.html','大胃萌宝抢奶喝')""/>
+				<img class="btnImage" src="assets/btn_wyyw.png" onclick="clicked('index.html','大胃萌宝抢奶喝')"/>
 			</div>
 		</div>
 		<img class="bgImg" src="assets/bg.jpg" />
 		
 		<img class="ruleImage" src="assets/gz.png" onclick="showRule()"/>
 	</div>
-	
 </body>
-<script type="text/javascript">	
-	$("#maskView").hide();
-	$("#ruleMask").hide();
-</script>
 </html>
