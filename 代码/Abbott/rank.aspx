@@ -10,6 +10,15 @@
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<link href="css/mui.css" rel="stylesheet"/>
 		<link href="css/common.css" rel="stylesheet" />
+		<script>
+			var _hmt = _hmt || [];
+			(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?50be6c11b00fe4165f77dfe57c6093ee";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+			})();
+		</script>
 	</head>
 	<style>
 		.point-title {
@@ -26,7 +35,7 @@
 		}
 		.point-item-label {
 			position: absolute;
-			width: 46.5%;
+			width: 50%;
 			height: 30px;
 			top: 50%;
 			margin-top: -15px;
@@ -100,15 +109,15 @@
 				<img class="point-title" src="assets/myPoint_title.png"/>
 				<div class="point-item-view" onclick="pageJump('totalPoint.html?pageType=1','大胃萌宝抢奶喝')">
 					<img class="point-item-bg" src="assets/myPoint_jz.png"/>
-					<label class="point-item-label">排名 No.999999999</label>
+					<label id="rank1" class="point-item-label"></label>
 				</div>
 				<div class="point-item-view" onclick="pageJump('totalPoint.html?pageType=2','大胃萌宝抢奶喝')">
 					<img class="point-item-bg" src="assets/myPoint_eml.png"/>
-					<label class="point-item-label">排名 No.99</label>
+					<label id="rank2" class="point-item-label"></label>
 				</div>
 				<div class="point-item-view" onclick="pageJump('totalPoint.html?pageType=3','大胃萌宝抢奶喝')">
 					<img class="point-item-bg" src="assets/myPoint_xas.png"/>
-					<label class="point-item-label">排名 No.9</label>
+					<label id="rank3" class="point-item-label"></label>
 				</div>
 				<img class="btnImage" src="assets/btn_back.png" onClick="backClick()"></img>
 			</div>
@@ -116,6 +125,58 @@
 	</body>
 	<script type="text/javascript">
 		mui.init();
+		
+		var rank1 = ''; // 我的小安素排名
+		var rank2 = ''; // 我的菁挚排名
+		var rank3 = '';	// 我的恩美力排名
+		
+		var Score1JSON = '';	// 小安素总排名
+		var Score2JSON = '';	// 菁挚总排名
+		var Score3JSON = '';	// 恩美力总排名
+		
+		var username = ''	// 我的用户名
+		var headurl = ''	// 我的头像url
+		var score1 = ''		// 我的小安素分数
+		var score2 = ''		// 我的菁挚分数
+		var score3 = ''		// 我的恩美力分数
+		
+		$("body").ready(function () {
+			// 先清楚缓存
+			localStorage.clear();
+			
+			rank1 = '排名 No.' + '<%=rank1 %>';
+			rank2 = '排名 No.' + '<%=rank2 %>';
+			rank3 = '排名 No.' + '<%=rank3 %>';
+			
+			$("#rank1").html(rank2);
+			$("#rank2").html(rank3);
+			$("#rank3").html(rank1);
+			
+			Score1JSON = '<%=Score1JSON %>';
+			Score2JSON = '<%=Score2JSON %>';
+			Score3JSON = '<%=Score3JSON %>';
+			
+			username = '<%=username %>';
+			headurl = '<%=headurl %>';
+			
+			score1 = '<%=score1 %>';
+			score2 = '<%=score2 %>';
+			score3 = '<%=score3 %>';
+			
+			
+			// 再添加缓存
+			localStorage.setItem('rank1',rank1);
+			localStorage.setItem('rank2',rank2);
+			localStorage.setItem('rank3',rank3);
+			localStorage.setItem('Score1JSON', Score1JSON);
+			localStorage.setItem('Score2JSON', Score2JSON);
+			localStorage.setItem('Score3JSON', Score3JSON);
+			localStorage.setItem('username', username);
+			localStorage.setItem('headurl', headurl);
+			localStorage.setItem('score1', score1);
+			localStorage.setItem('score2', score2);
+			localStorage.setItem('score3', score3);
+		})
 		
 		function backClick() {
 			mui.back();

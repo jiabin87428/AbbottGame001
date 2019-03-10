@@ -5,7 +5,6 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>大胃萌宝抢奶喝</title>
 		<script src="js/mui.js"></script>
-		<script type="text/javascript" src="js/wx.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/common.js"></script>
 		<link href="css/mui.css" rel="stylesheet"/>
@@ -86,12 +85,16 @@
 			justify-content: center;
 		}
 		.phItemHeadImg {
-			width: auto;
-			height: 120%;
+			/* width: auto;
+			height: 120%; */
+			width: 35px;
+			height: 35px;
 			border-radius: 50%;
 			margin-top: -5px;
 		}
 		.phItemHgImg {
+			width: 40px;
+			height: 32px;
 			position: absolute;
 			/* width: 100%; */
 			top: -90%;
@@ -155,18 +158,60 @@
 			height: 80%;
 		}
 		
-		/* 设置了浏览器高度不大于1000px时 图片显示的宽度 - 高分辨率*/ 
+		/* 设置了浏览器高度不大于1000px时 图片显示的宽度 */ 
 		@media screen and (max-height: 1000px) { 
 			.phbgView {
 				width: 90%;
 			}
-			.phItemScore_jz{
-				
+			.phItemHeadImg {
+				width: 35px;
+				height: 35px;
 			}
 		}
 		
-		/* 设置了浏览器高度不大于900px时 图片显示的宽度 - 低分辨率*/ 
-		@media screen and (max-height: 600px) { 
+		/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+		@media screen and (max-height: 800px) { 
+			.phbgView {
+				width: 90%;
+			}
+			.phItemHeadImg {
+				width: 35px;
+				height: 35px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+		@media screen and (max-height: 700px) { 
+			.phbgView {
+				width: 80%;
+			}
+			.phItemHeadImg {
+				width: 35px;
+				height: 35px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+		@media screen and (max-height: 650px) { 
+			.phbgView {
+				width: 80%;
+			}
+			.phItemHeadImg {
+				width: 25px;
+				height: 25px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
+		@media screen and (max-height: 630px) { 
+			.phbgView {
+				width: 80%;
+			}
+			.phItemHeadImg {
+				width: 25px;
+				height: 25px;
+			}
+			
 			.phbgView {
 				width: 70%;
 			}
@@ -273,33 +318,73 @@
 		
 		// var pageType = 1;// 1.菁挚 2.恩美力 3.小安素
 		var pageType = getUrlParam("pageType"); // 1.菁挚 2.恩美力 3.小安素
+		var rank = '';	// 我的排名
+		var ScoreList = null;	// 总排名
+		
+		var username = ''	// 我的用户名
+		var headurl = ''	// 我的头像url
+		var score = ''		// 我的分数
 		
 		$("body").ready(function () {
+			username = localStorage.getItem("username");
+			headurl = localStorage.getItem("headurl");
+			
 			if (pageType == 1) {
 				$("#titleImg").attr("src", "assets/ph_jz_title.png");
 				$("#bgImg").attr("src", "assets/ph_jz_Bg.png");
+				
+				rank = localStorage.getItem("rank2");
+				ScoreList = JSON.parse(localStorage.getItem("Score2JSON"));
+				score = localStorage.getItem("score2");
 			}else if (pageType == 2) {
 				$("#titleImg").attr("src", "assets/ph_eml_title.png");
 				$("#bgImg").attr("src", "assets/ph_eml_Bg.png");
+				
+				rank = localStorage.getItem("rank3");
+				ScoreList = JSON.parse(localStorage.getItem("Score3JSON"));
+				score = localStorage.getItem("score3");
 			}else {
 				$("#titleImg").attr("src", "assets/ph_xas_title.png");
 				$("#bgImg").attr("src", "assets/ph_xas_Bg.png");
+				
+				rank = localStorage.getItem("rank1");
+				ScoreList = JSON.parse(localStorage.getItem("Score1JSON"));
+				score = localStorage.getItem("score1");
 			}
 			
-			var headImg = 'http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg';
-			var name = '安迪';
-			var score = '999999';
+			alert(JSON.stringify(ScoreList));
 			
-			createCell(headImg, name, score, 1);
-			createCell(headImg, name, score, 2);
-			createCell(headImg, name, score, 3);
-			createCell(headImg, name, score, 4);
-			createCell(headImg, name, score, 5);
-			createCell(headImg, name, score, 6);
-			createCell(headImg, name, score, 7);
-			createCell(headImg, name, score, 8);
+			$.each(ScoreList,function(i,item){
+				var score = 0;
+				if (pageType == 1) {
+					score = item.Score2;
+				}else if (pageType == 2) {
+					score = item.Score3;
+				}else {
+					score = item.Score1;
+				}
+				
+				createCell(item.Headurl, item.Username, score, i + 1);
+		　　});
+		
 			createMyCellLine();
-			createCell(headImg, name, score, 88);
+			
+			createCell(headurl, username, score, rank);
+			
+// 			var headImg = 'http://img5.duitang.com/uploads/item/201409/16/20140916154809_WukFC.thumb.700_0.jpeg';
+// 			var name = '安迪';
+// 			var score = '999999';
+// 			
+// 			createCell(headImg, name, score, 1);
+// 			createCell(headImg, name, score, 2);
+// 			createCell(headImg, name, score, 3);
+// 			createCell(headImg, name, score, 4);
+// 			createCell(headImg, name, score, 5);
+// 			createCell(headImg, name, score, 6);
+// 			createCell(headImg, name, score, 7);
+// 			createCell(headImg, name, score, 8);
+// 			createMyCellLine();
+// 			createCell(headImg, name, score, 88);
 		})
 		
 		// 生成cell
@@ -337,7 +422,9 @@
 			
 			var phItemHeadImg = document.createElement("img");
 			phItemHeadImg.className = 'phItemHeadImg';
+			// phItemHeadImg.id = 'head' + ranking;
 			phItemHeadImg.src = headImg;
+			// $('#head' + ranking).css('width',$('#head' + ranking).css('height'));
 			div.appendChild(phItemHeadImg);
 			
 			var phItemScore = document.createElement("label");

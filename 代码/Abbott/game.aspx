@@ -26,6 +26,8 @@
 <link type="text/css" rel="stylesheet" href="css/time_css.css" />
 <link href="css/mui.css" rel="stylesheet" />
 
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
 <script>
 	var _hmt = _hmt || [];
 	(function() {
@@ -68,7 +70,6 @@
 		bottom: 0px;
 		left: 50%;
 		margin-left: -100px;
-		/* background-image:url(assets/startBtn.png); */
 		background-size: 100% 100%;
 		background-color:transparent;
 		border-color: transparent;
@@ -87,7 +88,6 @@
 		bottom: 0px;
 		left: 50%;
 		margin-left: -100px;
-		/* background-image:url(assets/startBtn.png); */
 		background-size: 100% 100%;
 		background-color:transparent;
 		border-color: transparent;
@@ -522,6 +522,56 @@
 <script>
 	var play_filter=document.getElementById('music_play_filter');
 	$("body").ready(function () {
+		wx.config({
+		    debug: false,
+		    appId: '<%=appId %>', 
+		    timestamp: <%=timestamp %>,
+		    nonceStr: '<%=nonceStr %>',
+		    signature: '<%=signature %>',
+		    jsApiList: [
+		      'onMenuShareTimeline',
+		      'onMenuShareAppMessage',
+		      'hideMenuItems',
+		      'showMenuItems',
+		      'hideAllNonBaseMenuItem',
+		      'showAllNonBaseMenuItem',
+		      
+		    ]
+		  });
+		
+		wx.ready(function () {
+		     wx.onMenuShareAppMessage({
+		        title: '大胃萌宝抢奶喝', // 分享标题
+		        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
+		        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
+		        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
+		        type: 'link', // 分享类型,music、video或link，不填默认为link
+		        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+		        success: function () { 
+		            // 用户确认分享后执行的回调函数
+		            
+		        },
+		        cancel: function () { 
+		            // 用户取消分享后执行的回调函数
+		        }
+		    });
+		    wx.onMenuShareTimeline({
+		    	 title: '大胃萌宝抢奶喝', // 分享标题
+		        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
+		        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
+		        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
+		        type: 'link', // 分享类型,music、video或link，不填默认为link
+		        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+		        success: function () { 
+		            // 用户确认分享后执行的回调函数
+		            
+		        },
+		        cancel: function () { 
+		            // 用户取消分享后执行的回调函数
+		        }
+		    });
+		});
+		
 		//musicfx.play();
 		//clickAudio.play();
 		
@@ -583,7 +633,7 @@
 		//just_play();
     }
 </script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> 
+<!--<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
 <script type="text/javascript">
     document.addEventListener("WeixinJSBridgeReady", function () { 
         document.getElementById('musicfx').play(); 

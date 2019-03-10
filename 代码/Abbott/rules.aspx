@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title> 大胃萌宝抢奶喝 </title>
     <script src="js/mui.js"></script>
-	<script type="text/javascript" src="js/wx.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
     <link href="css/mui.css" rel="stylesheet"/>
 	<link href="css/common.css" rel="stylesheet" />
@@ -32,8 +31,6 @@
 		 * @param {String} d	文档页面文件名称（doc目录下），不传入则使用页面的标题
 		 */
 		function clicked(id, t, d){
-// 			GWC.getUrlParams();
-// 			GWC.doRedirect();
 // 			mui.showLoading("正在加载..","div");
 			mui.openWindow({
 				url: id,

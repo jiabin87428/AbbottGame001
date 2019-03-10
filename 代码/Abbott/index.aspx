@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title> 大胃萌宝抢奶喝 </title>
     <script src="js/mui.js"></script>
-	<script type="text/javascript" src="js/wx.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/common.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -22,12 +21,27 @@
 		var rule = 1;	// 	显示游戏规则-1 2 3
 		
 		//var targetID = getUrlParam("targetId"); 
-		var targetID = ""
-		var userId = ""
+		var userId = "";			// 当前用户的ID
+		
+		// 助力页用
+		var targetID = "";			// 发起者的ID
+		var targetusername = "";	// 发起者的昵称
+		var targetrank1 = "";		// 发起者的小安素排名
+		var targetrank2 = "";		// 发起者的菁挚排名
+		var targetrank3 = "";		// 发起者的恩美力排名
+		var targetcount = "";		// 有多少人为发起者助力
+		
 		
 		$("body").ready(function () {
-			targetID = document.getElementById("lbTargetID").innerHTML;
 			userId = document.getElementById("lbUserID").innerHTML;
+			
+			targetID = document.getElementById("lbTargetID").innerHTML;
+			targetusername = '<%=targetusername %>';
+			targetrank1 = '<%=targetrank1 %>';
+			targetrank2 = '<%=targetrank2 %>';
+			targetrank3 = '<%=targetrank3 %>';
+			targetcount = '<%=targetcount %>';
+			
 			
 			//alert(targetID)
 			
@@ -42,8 +56,9 @@
 			}else {
 				$("#play1").hide();
 				$("#play2").hide();
+				$("#helpLabel").html('已有' + targetcount + '人为Ta助力');
+				$("#help1").html(targetusername + ' 小安素：No.' + targetrank1 + '菁挚：No.' + targetrank2 + '恩美力：No.' + targetrank3);
 				//alert('传过来的ID:' + targetID + '此页为助力页');
-				
 			}
 			
 			//$("#play1").click(function () {
@@ -130,8 +145,6 @@
 		 * @param {String} d	文档页面文件名称（doc目录下），不传入则使用页面的标题
 		 */
 		function clicked(id, t, d){
-// 			GWC.getUrlParams();
-// 			GWC.doRedirect();
 // 			mui.showLoading("正在加载..","div");
 			mui.openWindow({
 				url: 'http://www.angelyang.net/' + id,
