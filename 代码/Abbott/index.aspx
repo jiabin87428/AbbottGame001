@@ -406,6 +406,9 @@
 		.ruleImage {
 			
 		}
+		.shareSubView {
+			width: 80%;
+		}
 	}
 	
 	/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
@@ -421,6 +424,9 @@
 		}
 		.ruleImage {
 			
+		}
+		.shareSubView {
+			width: 80%;
 		}
 	}
 	
@@ -438,6 +444,9 @@
 		.ruleImage {
 			
 		}
+		.shareSubView {
+			width: 80%;
+		}
 	}
 	
 	/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
@@ -450,6 +459,9 @@
 		}
 		.ruleImage {
 			
+		}
+		.shareSubView {
+			width: 80%;
 		}
 	}
 	
@@ -496,7 +508,7 @@
 			<img class="bgImg" src="assets/bg.jpg" />
 			<img class="ruleImage" src="assets/gz.png" onclick="showRule()"/>
 			
-			<div>
+			<div style="display: none;">
 				<asp:Label ID="lbUserID" runat="server" Text="Label"></asp:Label>
 				<br />
 				<asp:Label ID="lbUserName" runat="server" Text="Label"></asp:Label>

@@ -252,9 +252,9 @@
 					<img class="btnImage" src="assets/btn_play_again.png" onclick="playAgain()"/>
 					<div class="rowBtnView">
 						<img class="btnImage" src="assets/btn_help.png" onclick="showShare()"/>
-						<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('myPoint.html','大胃萌宝抢奶喝')"/>
+						<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('rank.aspx','大胃萌宝抢奶喝')"/>
 					</div>
-					<label id="timeLabel" class="resultLabel">剩余游戏机会：1次</label>
+					<!--<label id="timeLabel" class="resultLabel">剩余游戏机会：1次</label>-->
 				</div>
 			</div>
 			
@@ -498,7 +498,7 @@
 	// 跳转页面
 	function jumpPage(id, t, d){
 		mui.openWindow({
-			url: id,
+			url: 'http://www.angelyang.net/' + id,
 		});
 	}
 	
