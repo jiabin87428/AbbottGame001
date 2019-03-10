@@ -35,8 +35,8 @@
 		.phItemView_jz {
 			position: relative;
 			width: 95%;
-			height: 7%;
-			margin-top: 15px;
+			height: 8%;
+			margin-top: 10px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
@@ -49,8 +49,8 @@
 		.phItemView_eml {
 			position: relative;
 			width: 95%;
-			height: 7%;
-			margin-top: 15px;
+			height: 8%;
+			margin-top: 10px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
@@ -63,8 +63,8 @@
 		.phItemView_xas {
 			position: relative;
 			width: 95%;
-			height: 7%;
-			margin-top: 15px;
+			height: 8%;
+			margin-top: 10px;
 			display: flex;
 			flex-direction: row;
 			align-items: center;
@@ -197,8 +197,8 @@
 				width: 80%;
 			}
 			.phItemHeadImg {
-				width: 25px;
-				height: 25px;
+				width: 35px;
+				height: 35px;
 			}
 		}
 		
@@ -352,20 +352,29 @@
 				score = localStorage.getItem("score1");
 			}
 			
-			alert(JSON.stringify(ScoreList));
-			
-			$.each(ScoreList,function(i,item){
-				var score = 0;
+			for(var i=0;i<ScoreList.length;i++) {
+				if(i > 7) {
+					break;
+				}
+				var item = ScoreList[i];
+				var rankscore = 0;
 				if (pageType == 1) {
-					score = item.Score2;
+					rankscore = item.Score2;
 				}else if (pageType == 2) {
-					score = item.Score3;
+					rankscore = item.Score3;
 				}else {
-					score = item.Score1;
+					rankscore = item.Score1;
 				}
 				
-				createCell(item.Headurl, item.Username, score, i + 1);
-		　　});
+				var itemUserName = item.Username;
+				if(itemUserName.length >= 3) {
+					var first = itemUserName.substring(0,1);
+					var last = itemUserName.substring(itemUserName.length-1, itemUserName.length);
+					itemUserName = first + '**' + last;
+				}
+				
+				createCell(item.Headurl, itemUserName, rankscore, i + 1);
+			}
 		
 			createMyCellLine();
 			
@@ -411,7 +420,7 @@
 			}else if (ranking == 2) {
 				var phItemHgImg = document.createElement("img");
 				phItemHgImg.className = 'phItemHgImg';
-				phItemHgImg.src = 'assets/ph_hg_1.png';
+				phItemHgImg.src = 'assets/ph_hg_2.png';
 				div.appendChild(phItemHgImg);
 			}else if (ranking == 3) {
 				var phItemHgImg = document.createElement("img");

@@ -144,13 +144,13 @@
 			// 先清楚缓存
 			localStorage.clear();
 			
-			rank1 = '排名 No.' + '<%=rank1 %>';
-			rank2 = '排名 No.' + '<%=rank2 %>';
-			rank3 = '排名 No.' + '<%=rank3 %>';
+			rank1 = '<%=rank1 %>';
+			rank2 = '<%=rank2 %>';
+			rank3 = '<%=rank3 %>';
 			
-			$("#rank1").html(rank2);
-			$("#rank2").html(rank3);
-			$("#rank3").html(rank1);
+			$("#rank1").html('排名 No.' + rank2);
+			$("#rank2").html('排名 No.' + rank3);
+			$("#rank3").html('排名 No.' + rank1);
 			
 			Score1JSON = '<%=Score1JSON %>';
 			Score2JSON = '<%=Score2JSON %>';
