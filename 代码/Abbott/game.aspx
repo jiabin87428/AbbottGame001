@@ -105,6 +105,7 @@
 	
 	.numClass {
 		position: absolute;
+		display: none;
 		right: 10px;
 		top: 10px;
 	}
@@ -387,7 +388,7 @@
 				//$('<%=txtScore1.ClientID %>').innerHTML = xasNum;	// txtScore1为小安素的分数
 				//$('<%=txtScore2.ClientID %>').innerHTML = jzNum;	// txtScore1为菁挚的分数
 				//$('<%=txtScore3.ClientID %>').innerHTML = emlNum;	// txtScore1为恩美力素的分数 
-				form1.submit()
+				//form1.submit()
 				
 				// 调用上传方法
 				document.getElementById("<%=btnSubmit.ClientID %>").click();
