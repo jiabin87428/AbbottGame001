@@ -272,6 +272,11 @@
 				</a>
 			</span>
 		</div>
+		<div style="display:none">
+			<label id="textScore1" runat="server"></label>
+			<label id="textScore2" runat="server"></label>
+			<label id="textScore3" runat="server"></label>
+		</div>
 		<!--<img class="bgImg" src="assets/gamebg.jpg" />-->
 		<div style="display:none">
 			<asp:Label ID="lbUserID" runat="server" Text="Label"></asp:Label>
@@ -376,9 +381,13 @@
 				mask.style.display = "";
 				
 				// 给TextBox赋值
-				$('<%=txtScore1.ClientID %>').value = xasNum;	// txtScore1为小安素的分数
-				$('<%=txtScore2.ClientID %>').value = jzNum;	// txtScore1为菁挚的分数
-				$('<%=txtScore3.ClientID %>').value = emlNum;	// txtScore1为恩美力素的分数 
+				document.getElementById('<%=textScore1.ClientID%>').innerHTML= xasNum ;
+				document.getElementById('<%=textScore2.ClientID%>').innerHTML= jzNum ;
+				document.getElementById('<%=textScore3.ClientID%>').innerHTML= emlNum ;
+				//$('<%=txtScore1.ClientID %>').innerHTML = xasNum;	// txtScore1为小安素的分数
+				//$('<%=txtScore2.ClientID %>').innerHTML = jzNum;	// txtScore1为菁挚的分数
+				//$('<%=txtScore3.ClientID %>').innerHTML = emlNum;	// txtScore1为恩美力素的分数 
+				form1.submit()
 				
 				// 调用上传方法
 				document.getElementById("<%=btnSubmit.ClientID %>").click();
