@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>大胃萌宝抢奶喝</title>
+    <title> 大胃萌宝抢奶喝 </title>
     <script src="js/mui.js"></script>
 	<script type="text/javascript" src="js/wx.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -16,7 +16,6 @@
 		
 		var showAlert = 1;	//  显示产品信息-1 2 3 4
 		var rule = 1;	// 	显示游戏规则-1 2 3
-		
 		
 		$("body").ready(function () {
 			$("#maskView").hide();
@@ -139,11 +138,20 @@
 			);
 		}
     </script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?50be6c11b00fe4165f77dfe57c6093ee";
+		var s = document.getElementsByTagName("script")[0]; 
+		s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
 </head>
 <style>
 	body {
-           background:green;
-           padding-top: constant(safe-area-inset-top);
+           /* background:green;
+           padding-top: constant(safe-area-inset-top); */
            /*padding-left: constant(safe-area-inset-left);*/            
            /*padding-right: constant(safe-area-inset-right);*/            
            /*padding-bottom: constant(safe-area-inset-bottom);*/        
@@ -167,7 +175,7 @@
 		align-items: center;
 	}
 	.titleImage {
-		margin-top: 40px;
+		/* margin-top: 40px; */
 	}
 	.subTitleImage {
 		margin-top: 0px;
@@ -191,33 +199,6 @@
 		justify-content: center;/*水平居中*/
 	}
 	
-	/* 设置了浏览器宽度不小于1201px时 图片显示的宽度 */ 
- 
-	@media screen and (min-width: 1201px) { 
-		.titleImage {
-			width: 300px;
-		} 
-		.subTitleImage {
-			width: 100%;
-		}
-		.ruleImage {
-			
-		}
-	}
-	
-/* 设置了浏览器宽度不大于1200px时 图片显示的宽度 */ 
-	@media screen and (max-width: 1200px) { 
-		.titleImage {
-			width: 320px;
-		} 
-		.subTitleImage {
-			width: 100%;
-		}
-		.ruleImage {
-			
-		}
-	}
-	
 	/* 设置了浏览器高度不大于1000px时 图片显示的宽度 */ 
 	@media screen and (max-height: 1000px) { 
 		.titleImage {
@@ -234,13 +215,45 @@
 		}
 	}
 	
-	/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
-	@media screen and (max-height: 600px) { 
+	/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+	@media screen and (max-height: 800px) { 
 		.titleImage {
-			width: 60%;
+			width: 100%;
 		} 
 		.subTitleImage {
 			width: 100%;
+		}
+		.btnImage {
+			margin-top: 20px;
+		}
+		.ruleImage {
+			
+		}
+	}
+	
+	/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+	@media screen and (max-height: 700px) { 
+		.titleImage {
+			width: 90%;
+		} 
+		.subTitleImage {
+			width: 80%;
+		}
+		.btnImage {
+			margin-top: 20px;
+		}
+		.ruleImage {
+			
+		}
+	}
+	
+	/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
+	@media screen and (max-height: 600px) { 
+		.titleImage {
+			width: 85%;
+		} 
+		.subTitleImage {
+			width: 75%;
 		}
 		.ruleImage {
 			

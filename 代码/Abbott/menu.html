@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>大胃萌宝抢奶喝</title>
     <script src="js/mui.js"></script>
@@ -17,6 +17,8 @@
 		var rule = 1;	// 	显示游戏规则-1 2 3
 		
 		var targetID = getUrlParam("targetId");
+		
+		alert(window.screen.height )
 		
 		$("body").ready(function () {
 			$("#maskView").hide();
@@ -272,6 +274,22 @@
 		}
 	}
 	
+	/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+	@media screen and (max-height: 800px) { 
+		.titleImage {
+			width: 100%;
+		} 
+		.subTitleImage {
+			width: 80%;
+		}
+		.btnImage {
+			margin-top: 20px;
+		}
+		.ruleImage {
+			
+		}
+	}
+	
 	/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
 	@media screen and (max-height: 600px) { 
 		.titleImage {
@@ -303,7 +321,7 @@
 		<div class="columnView">
 			<img class="titleImage" src="assets/logo.png"/>
 			<label id="help1" class="targetRanking">安迪目前排名No.999</label>
-			<img class="subTitleImage" src="assets/chick.png" onclick="showProduct()"/> -->
+			<img class="subTitleImage" src="assets/chick.png" onclick="showProduct()"/>
 			<div id="help2" class="helpView">
 				<label id="helpLabel" class="helpLabel">已有99人为TA助力</label>
 				<img class="helpImg" src="assets/helpChicks.png"/>

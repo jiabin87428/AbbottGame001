@@ -40,20 +40,50 @@
 			background-color: rgba(203,103,254,0.5);
 		}
 		
-		/* 设置了浏览器高度不大于1000px时 图片显示的宽度 - 高分辨率*/ 
+		/* 设置了浏览器高度不大于1000px时 图片显示的宽度 */ 
 		@media screen and (max-height: 1000px) { 
 			.point-item-view {
-				width: 80%;
+				width: 100%;
 			}
 			.point-item-label {
 				font-size: 16px;
 			}
 		}
 		
-		/* 设置了浏览器高度不大于900px时 图片显示的宽度 - 低分辨率*/ 
-		@media screen and (max-height: 600px) {
+		/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+		@media screen and (max-height: 800px) { 
 			.point-item-view {
-				width: 60%;
+				width: 90%;
+			}
+			.point-item-label {
+				font-size: 16px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+		@media screen and (max-height: 700px) { 
+			.point-item-view {
+				width: 80%;
+			}
+			.point-item-label {
+				font-size: 14px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+		@media screen and (max-height: 650px) { 
+			.point-item-view {
+				width: 75%;
+			}
+			.point-item-label {
+				font-size: 14px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
+		@media screen and (max-height: 630px) { 
+			.point-item-view {
+				width: 70%;
 			}
 			.point-item-label {
 				font-size: 10px;

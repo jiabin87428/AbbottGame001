@@ -107,7 +107,7 @@
 		justify-content: space-around;/*水平居中*/
 	}
 	.scoreItem {
-		position: absolute;
+		position: relative;
 		width: 100%;
 	}
 	.scoreImg {
@@ -115,9 +115,9 @@
 	}
 	.scoreText {
 		/* background-color: #007AFF; */
-		position: relative;
-		right: -40px;
-		bottom: 25px;
+		position: absolute;
+		bottom: 15%;
+		right: 35%;
 		color: #FFFFFF;
 		font-size: 14px;
 		text-align: center;
@@ -170,76 +170,78 @@
 </style>
 
 <body>
-	<div id="baseView" class="bassView">
-		<div class="scoreView">
-			<div id="scoreItem">
-				<img class="scoreImg" src="assets/xas.png" >
-				<label id="score0" class="scoreText">X0</label>
-			</div>
-			<div id="scoreItem">
-				<img class="scoreImg" src="assets/jz.png" >
-				<label id="score1" class="scoreText">X0</label>
-			</div>
-			<div id="scoreItem">
-				<img class="scoreImg" src="assets/eml.png" >
-				<label id="score2" class="scoreText">X0</label>
-			</div>
-		</div>
-		<div class="game_time">
-			<img class="bgClock" src="assets/clockBg.png"/>
-			<div class="hold">
-				<div class="pie pie1"></div>
-			</div>
-			<div class="hold">
-				<div class="pie pie2"></div>
-			</div>
-			<div class="bg"> </div>
-			<!-- <div class="time">10s</div> -->
-			<img class="time" src="assets/10.png"/>
-		</div>
-		<div class="gameView">
-			<img class="boxView" src="assets/gameBox.png" />
-			<img id="readyImg" style="display:none" class="readyImg" src="assets/3.png"/>
-			<div id="readyTap" class="btnReadyClass" onclick="readyClick()"></div>
-			<div id="btnTap" style="display:none"  class="btnClass"></div>
-			<audio id="clickAudio" src="assets/click.mp3" style="display:none"></audio>
-			<audio id="countDownAudio" src="assets/countDown.mp3" style="display:none"></audio>
-			<audio id="startAudio" src="assets/start.m4a" style="display:none"></audio>
-			<audio id="finishAudio" src="assets/finish.mp3" style="display:none"></audio>
-		</div>
-		<div class="numClass" id="num"></div>
-		
-		<div id="mask" class="mask">
-			<div class="maskView">
-				<img class="maskSubView" src="assets/subBg.png" >
-				<div id="resultLabelView" class="resultLabelView">
-					<label id="resultLabel" class="resultLabel"></label>
+	<form id="form1" runat="server">
+		<div id="baseView" class="baseView">
+			<div class="scoreView">
+				<div id="scoreItem" class="scoreItem">
+					<img class="scoreImg" src="assets/xas.png" >
+					<label id="score0" class="scoreText">X0</label>
 				</div>
-				<!-- <button id="playAgain" type="button" style="width: 200px;height: 60px;" class="mui-btn mui-btn-warning" onclick="playAgain()">再玩一次</button> -->
-				<img class="btnImage" src="assets/btn_play_again.png" onclick="playAgain()"/>
-				<div class="rowBtnView">
-					<img class="btnImage" src="assets/btn_help.png" onclick="showShare()"/>
-					<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('point.html','大胃萌宝抢奶喝')"/>
+				<div id="scoreItem" class="scoreItem">
+					<img class="scoreImg" src="assets/jz.png" >
+					<label id="score1" class="scoreText">X0</label>
 				</div>
-				<label id="timeLabel" class="resultLabel">剩余游戏机会：1次</label>
+				<div id="scoreItem" class="scoreItem">
+					<img class="scoreImg" src="assets/eml.png" >
+					<label id="score2" class="scoreText">X0</label>
+				</div>
 			</div>
-		</div>
-		
-		<div id="shareMask" class="shareMask" onclick="hideShare()">
-			<div class="shareMaskView">
-				<img class="shareSubView" src="assets/helpBg.png" >
+			<div class="game_time">
+				<img class="bgClock" src="assets/clockBg.png"/>
+				<div class="hold">
+					<div class="pie pie1"></div>
+				</div>
+				<div class="hold">
+					<div class="pie pie2"></div>
+				</div>
+				<div class="bg"> </div>
+				<!-- <div class="time">10s</div> -->
+				<img class="time" src="assets/10.png"/>
 			</div>
+			<div class="gameView">
+				<img class="boxView" src="assets/gameBox.png" />
+				<img id="readyImg" style="display:none" class="readyImg" src="assets/3.png"/>
+				<div id="readyTap" class="btnReadyClass" onclick="readyClick()"></div>
+				<div id="btnTap" style="display:none"  class="btnClass"></div>
+				<audio id="clickAudio" src="assets/click.mp3" style="display:none"></audio>
+				<audio id="countDownAudio" src="assets/countDown.mp3" style="display:none"></audio>
+				<audio id="startAudio" src="assets/start.m4a" style="display:none"></audio>
+				<audio id="finishAudio" src="assets/finish.mp3" style="display:none"></audio>
+			</div>
+			<div class="numClass" id="num"></div>
+			
+			<div id="mask" class="mask">
+				<div class="maskView">
+					<img class="maskSubView" src="assets/subBg.png" >
+					<div id="resultLabelView" class="resultLabelView">
+						<label id="resultLabel" class="resultLabel"></label>
+					</div>
+					<!-- <button id="playAgain" type="button" style="width: 200px;height: 60px;" class="mui-btn mui-btn-warning" onclick="playAgain()">再玩一次</button> -->
+					<img class="btnImage" src="assets/btn_play_again.png" onclick="playAgain()"/>
+					<div class="rowBtnView">
+						<img class="btnImage" src="assets/btn_help.png" onclick="showShare()"/>
+						<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('myPoint.html','大胃萌宝抢奶喝')"/>
+					</div>
+					<label id="timeLabel" class="resultLabel">剩余游戏机会：1次</label>
+				</div>
+			</div>
+			
+			<div id="shareMask" class="shareMask" onclick="hideShare()">
+				<div class="shareMaskView">
+					<img class="shareSubView" src="assets/helpBg.png" >
+				</div>
+			</div>
+			
+			<span id="musicControl">
+				<a id="mc_play" class="on" onclick="play_music();">
+					<audio id="musicfx" loop="loop" autoplay="autoplay">
+						<source src="assets/bgm.m4a" type="audio/mpeg">
+					</audio>
+				</a>
+			</span>
 		</div>
-		
-		<span id="musicControl">
-			<a id="mc_play" class="on" onclick="play_music();">
-				<audio id="musicfx" loop="loop" autoplay="autoplay">
-					<source src="assets/bgm.m4a" type="audio/mpeg">
-				</audio>
-			</a>
-		</span>
-	</div>
-	<img class="bgImg" src="assets/gamebg.jpg" />
+		<img class="bgImg" src="assets/gamebg.jpg" />
+	</form>
 </body>
 
 <script type="text/javascript">
@@ -463,6 +465,31 @@
 
 <!-- music -->
 <script>
+	var play_filter=document.getElementById('music_play_filter');
+	$("body").ready(function () {
+// 		play_filter.addEventListener('click', function(){
+// 		    just_play(1);
+// 		});
+// 		play_filter.addEventListener('touchstart', function(){
+// 		    just_play(1);
+// 		});
+// 		play_filter.addEventListener('touchend', function(){
+// 		    just_play(1);
+// 		});
+// 		play_filter.addEventListener('touchmove', function(){
+// 		    just_play(1);
+// 		});
+// 		play_filter.addEventListener('mousedown', function(){
+// 		    just_play(1);
+// 		});
+// 		play_filter.addEventListener('mouseup', function(){
+// 		    just_play(1);
+// 		});
+// 		play_filter.addEventListener('mousemove',function(){
+// 		    just_play(1);
+// 		});
+	})
+	
 	function play_music(){
         if ($('#mc_play').hasClass('on')){
             $('#mc_play audio').get(0).pause();
@@ -492,33 +519,11 @@
         }
     }
     window.onload=function(){
-        if (!is_weixn()){
-            just_play();
-        }
+//         if (!is_weixn()){
+//             just_play();
+//         }
+		just_play();
     }
-	
-	var play_filter=document.getElementById('music_play_filter');
-	play_filter.addEventListener('click', function(){
-	    just_play(1);
-	});
-	play_filter.addEventListener('touchstart', function(){
-	    just_play(1);
-	});
-	play_filter.addEventListener('touchend', function(){
-	    just_play(1);
-	});
-	play_filter.addEventListener('touchmove', function(){
-	    just_play(1);
-	});
-	play_filter.addEventListener('mousedown', function(){
-	    just_play(1);
-	});
-	play_filter.addEventListener('mouseup', function(){
-	    just_play(1);
-	});
-	play_filter.addEventListener('mousemove',function(){
-	    just_play(1);
-	});
 </script>
 
 </html>

@@ -3,14 +3,16 @@
 <!DOCTYPE html>
 
 <html>
+<html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>大胃萌宝抢奶喝</title>
+    <title> 大胃萌宝抢奶喝 </title>
     <script src="js/mui.js"></script>
 	<script type="text/javascript" src="js/wx.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/common.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <link href="css/mui.css" rel="stylesheet"/>
 	<link href="css/common.css" rel="stylesheet" />
     <script type="text/javascript" charset="utf-8">
@@ -19,21 +21,107 @@
 		var showAlert = 1;	//  显示产品信息-1 2 3 4
 		var rule = 1;	// 	显示游戏规则-1 2 3
 		
+		//var targetID = getUrlParam("targetId"); 
+		var targetID = ""
+		var userId = ""
+		
 		$("body").ready(function () {
+			targetID = document.getElementById("lbTargetID").innerHTML;
+			userId = document.getElementById("lbUserID").innerHTML;
+			
+			//alert(targetID)
+			
 			$("#maskView").hide();
 			$("#ruleMask").hide();
-			if (targetID == null) {
+			$("#shareMask").hide();
+			if (targetID == "" || targetID == null) {
 				$("#help1").hide();
 				$("#help2").hide();
 				$("#help3").hide();
-				console.log('没有传过来的ID，此页为用户自己的游戏页');
+				//alert('没有传过来的ID，此页为用户自己的游戏页');
 			}else {
 				$("#play1").hide();
 				$("#play2").hide();
-				console.log('传过来的ID:' + targetID + '此页为助力页');
+				//alert('传过来的ID:' + targetID + '此页为助力页');
 				
 			}
+			
+			//$("#play1").click(function () {
+				//document.getElementById("<%=btnGame.ClientID %>").click();
+			//})
+			
+			//var s = document.getElementById("<%=lbUserID.ClientID %>").html();
+			
+			wx.config({
+			    debug: false,
+			    appId: '<%=appId %>', 
+			    timestamp: <%=timestamp %>,
+			    nonceStr: '<%=nonceStr %>',
+			    signature: '<%=signature %>',
+			    jsApiList: [
+			      'onMenuShareTimeline',
+			      'onMenuShareAppMessage',
+			      'hideMenuItems',
+			      'showMenuItems',
+			      'hideAllNonBaseMenuItem',
+			      'showAllNonBaseMenuItem',
+			      
+			    ]
+			  });
+			
+			wx.ready(function () {
+			     wx.onMenuShareAppMessage({
+			        title: '大胃萌宝抢奶喝', // 分享标题
+			        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
+			        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
+			        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
+			        type: 'link', // 分享类型,music、video或link，不填默认为link
+			        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			        success: function () { 
+			            // 用户确认分享后执行的回调函数
+			            
+			        },
+			        cancel: function () { 
+			            // 用户取消分享后执行的回调函数
+			        }
+			    });
+			    wx.onMenuShareTimeline({
+			    	 title: '大胃萌宝抢奶喝', // 分享标题
+			        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
+			        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
+			        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
+			        type: 'link', // 分享类型,music、video或link，不填默认为link
+			        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			        success: function () { 
+			            // 用户确认分享后执行的回调函数
+			            
+			        },
+			        cancel: function () { 
+			            // 用户取消分享后执行的回调函数
+			        }
+			    });
+			});
 		})
+		
+		// 点击即刻参与
+		function playGame() {
+			var count = document.getElementById("lbCount").innerHTML;
+			if(count <= 0) {
+				alert('您已无游戏机会')
+			}else{
+				document.getElementById("<%=btnGame.ClientID %>").click();
+			}
+		}
+		
+		// 点击为Ta助力
+		function helpClick() {
+			var isHelped = document.getElementById("lbIsT").innerHTML;
+			if(isHelped == '1') {// 已为Ta助过力,弹出提示
+				alert('您已经为Ta助过力啦！')
+			}else if (isHelped == '0') {// 未为Ta助过力,进入游戏页
+				document.getElementById("<%=btnGame.ClientID %>").click();
+			}
+		}
 		
 		/**
 		 * 打开新窗口
@@ -46,9 +134,22 @@
 // 			GWC.doRedirect();
 // 			mui.showLoading("正在加载..","div");
 			mui.openWindow({
-				url: id,
+				url: 'http://www.angelyang.net/' + id,
+				show:{
+				  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+				},
 			});
 		}
+		// 跳转排行榜
+		function showRank() {
+			mui.openWindow({
+				url: id,
+				show:{
+				  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+				},
+			});
+		}
+		
 		// 展示产品
 		function showProduct() {
 			$("#maskView").animate(
@@ -102,6 +203,29 @@
 			);
 		}
 		
+		// 展示分享方法
+		function showShare() {
+			$("#shareMask").animate(
+			　　{opacity:'toggle'},
+			　　"slow",
+			　　null,
+			　　function(){
+			　　　　$("#shareMask").show();
+			　　}
+			);
+		}
+		// 隐藏分享方法
+		function hideShare() {
+			$("#shareMask").animate(
+			　　{opacity:'toggle'},
+			　　"slow",
+			　　null,
+			　　function(){
+			　　　　$("#shareMask").hide();
+			　　}
+			);
+		}
+		
 		function scrollToNext(type) {
 			if (type == 'opi') {// 产品
 				if (showAlert < 4) {
@@ -145,6 +269,15 @@
 			);
 		}
     </script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?50be6c11b00fe4165f77dfe57c6093ee";
+		var s = document.getElementsByTagName("script")[0]; 
+		s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
 </head>
 <style>
 	body {
@@ -173,7 +306,7 @@
 		align-items: center;
 	}
 	.titleImage {
-		margin-top: 40px;
+		/* margin-top: 40px; */
 	}
 	.subTitleImage {
 		margin-top: 0px;
@@ -230,37 +363,58 @@
 		font-weight: 700;
 	}
 	
-	/* 设置了浏览器宽度不小于1201px时 图片显示的宽度 */ 
- 
-	@media screen and (min-width: 1201px) { 
-		.titleImage {
-			width: 300px;
-		} 
-		.subTitleImage {
-			width: 100%;
-		}
-		.ruleImage {
-			
-		}
-	}
-	
-/* 设置了浏览器宽度不大于1200px时 图片显示的宽度 */ 
-	@media screen and (max-width: 1200px) { 
-		.titleImage {
-			width: 320px;
-		} 
-		.subTitleImage {
-			width: 100%;
-		}
-		.ruleImage {
-			
-		}
-	}
-	
 	/* 设置了浏览器高度不大于1000px时 图片显示的宽度 */ 
 	@media screen and (max-height: 1000px) { 
 		.titleImage {
-			width: 80%;
+			width: 100%;
+		} 
+		.subTitleImage {
+			width: 10%;
+		}
+		.btnImage {
+			margin-top: 20px;
+		}
+		.ruleImage {
+			
+		}
+	}
+	
+	/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+	@media screen and (max-height: 800px) { 
+		.titleImage {
+			width: 100%;
+		} 
+		.subTitleImage {
+			width: 100%;
+		}
+		.btnImage {
+			margin-top: 20px;
+		}
+		.ruleImage {
+			
+		}
+	}
+	
+	/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+	@media screen and (max-height: 700px) { 
+		.titleImage {
+			width: 100%;
+		} 
+		.subTitleImage {
+			width: 100%;
+		}
+		.btnImage {
+			margin-top: 20px;
+		}
+		.ruleImage {
+			
+		}
+	}
+	
+	/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+	@media screen and (max-height: 650px) { 
+		.titleImage {
+			width: 90%;
 		} 
 		.subTitleImage {
 			width: 80%;
@@ -274,12 +428,12 @@
 	}
 	
 	/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
-	@media screen and (max-height: 600px) { 
+	@media screen and (max-height: 630px) { 
 		.titleImage {
-			width: 60%;
+			width: 80%;
 		} 
 		.subTitleImage {
-			width: 60%;
+			width: 70%;
 		}
 		.ruleImage {
 			
@@ -302,22 +456,28 @@
 				<img id="downBtn_rule" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext('rule')" />
 			</div>
 			
+			<div id="shareMask" class="shareMask" onclick="hideShare()">
+				<div class="shareMaskView">
+					<img class="shareSubView" src="assets/helpBg.png" >
+				</div>
+			</div>
+			
 			<div class="columnView">
 				<img class="titleImage" src="assets/logo.png"/>
 				<label id="help1" class="targetRanking">安迪目前排名No.999</label>
-				<img class="subTitleImage" src="assets/chick.png" onclick="showProduct()"/> -->
+				<img class="subTitleImage" src="assets/chick.png" onclick="showProduct()"/>
 				<div id="help2" class="helpView">
 					<label id="helpLabel" class="helpLabel">已有99人为TA助力</label>
 					<img class="helpImg" src="assets/helpChicks.png"/>
 				</div>
-				<img id="play1" class="btnImage" src="assets/btn_play.png" onclick="clicked('game.html','大胃萌宝抢奶喝')"/>
+				<img id="play1" class="btnImage" src="assets/btn_play.png" onclick="playGame()"/>
 				<div id="play2" class="rowBtnView">
-					<img class="btnImage" src="assets/btn_help.png" onclick=""/>
-					<img class="btnImage" src="assets/btn_point.png" onclick="clicked('myPoint.html','大胃萌宝抢奶喝')"/>
+					<img class="btnImage" src="assets/btn_help.png" onclick="showShare()"/>
+					<img class="btnImage" src="assets/btn_point.png" onclick="clicked('rank.aspx','大胃萌宝抢奶喝')"/>
 				</div>
 				<div id="help3" class="rowBtnView">
-					<img class="btnImage" src="assets/btn_wtzl.png" onclick="clicked('game.html','大胃萌宝抢奶喝')""/>
-					<img class="btnImage" src="assets/btn_wyyw.png" onclick="clicked('index.html','大胃萌宝抢奶喝')"/>
+					<img id="play1" class="btnImage" src="assets/btn_wtzl.png" onclick="helpClick()"/>
+					<img class="btnImage" src="assets/btn_wyyw.png" onclick="clicked('rules.aspx','大胃萌宝抢奶喝')"/>
 				</div>
 			</div>
 			<img class="bgImg" src="assets/bg.jpg" />
@@ -334,6 +494,10 @@
 				<br />
 				<asp:Label ID="lbTargetID" runat="server" Text="Label"></asp:Label>
 				<br />
+                <asp:Button ID="btnGame" runat="server" Text="开始游戏" OnClick="btnGame_Click" />
+				<br />
+				<asp:Label ID="lbIsT" runat="server" Text="Label"></asp:Label>
+                <br />
 			</div>
 		</div>
 	</form>

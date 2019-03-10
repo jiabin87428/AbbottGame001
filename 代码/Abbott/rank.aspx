@@ -1,0 +1,133 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="rank.aspx.cs" Inherits="Abbott.rank" %>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>大胃萌宝抢奶喝</title>
+		<script src="js/mui.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<link href="css/mui.css" rel="stylesheet"/>
+		<link href="css/common.css" rel="stylesheet" />
+	</head>
+	<style>
+		.point-title {
+/* 			position: absolute;
+			top: 0; */
+			width: 100%;
+		}
+		.point-item-view {
+			position: relative;
+			width: 80%;
+		}
+		.point-item-bg {
+			width: 100%;
+		}
+		.point-item-label {
+			position: absolute;
+			width: 46.5%;
+			height: 30px;
+			top: 50%;
+			margin-top: -15px;
+			left: 43.5%;
+			padding: 5px 5px 5px 5px;
+			border-radius: 30px;
+			vertical-align: middle;
+			text-align: center;
+			color: #FFFA01;
+			font-size: 18px;
+			font-style: initial;
+			font-weight: 700;
+			background-color: rgba(203,103,254,0.5);
+		}
+		
+		/* 设置了浏览器高度不大于1000px时 图片显示的宽度 */ 
+		@media screen and (max-height: 1000px) { 
+			.point-item-view {
+				width: 100%;
+			}
+			.point-item-label {
+				font-size: 16px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+		@media screen and (max-height: 800px) { 
+			.point-item-view {
+				width: 90%;
+			}
+			.point-item-label {
+				font-size: 16px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+		@media screen and (max-height: 700px) { 
+			.point-item-view {
+				width: 80%;
+			}
+			.point-item-label {
+				font-size: 14px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+		@media screen and (max-height: 650px) { 
+			.point-item-view {
+				width: 75%;
+			}
+			.point-item-label {
+				font-size: 14px;
+			}
+		}
+		
+		/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
+		@media screen and (max-height: 630px) { 
+			.point-item-view {
+				width: 70%;
+			}
+			.point-item-label {
+				font-size: 10px;
+				height: 20px;
+				padding: 0px 0px 0px 0px;
+			}
+		}
+	</style>
+	<body>
+		<form id="form1" runat="server">
+			<div class="baseViewColumn">
+				<img class="point-title" src="assets/myPoint_title.png"/>
+				<div class="point-item-view" onclick="pageJump('totalPoint.html?pageType=1','大胃萌宝抢奶喝')">
+					<img class="point-item-bg" src="assets/myPoint_jz.png"/>
+					<label class="point-item-label">排名 No.999999999</label>
+				</div>
+				<div class="point-item-view" onclick="pageJump('totalPoint.html?pageType=2','大胃萌宝抢奶喝')">
+					<img class="point-item-bg" src="assets/myPoint_eml.png"/>
+					<label class="point-item-label">排名 No.99</label>
+				</div>
+				<div class="point-item-view" onclick="pageJump('totalPoint.html?pageType=3','大胃萌宝抢奶喝')">
+					<img class="point-item-bg" src="assets/myPoint_xas.png"/>
+					<label class="point-item-label">排名 No.9</label>
+				</div>
+				<img class="btnImage" src="assets/btn_back.png" onClick="backClick()"></img>
+			</div>
+		</form>
+	</body>
+	<script type="text/javascript">
+		mui.init();
+		
+		function backClick() {
+			mui.back();
+		}
+		
+		function pageJump(id, t, d){
+			mui.openWindow({
+				url: id,
+				show:{
+				  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+				},
+			});
+		}
+	</script>
+</html>

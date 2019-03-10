@@ -12,6 +12,17 @@
 	background-size: 100% 100%;
 	-moz-background-size: 100% 100%;
 }
+.gameBaseView {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	/* background-color: #007AFF; */
+	
+	background-image: url(../assets/gamebg.jpg);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+}
 
 .titleImgView {
 	width: 100%;
@@ -53,7 +64,7 @@
 
 .btnImage {
 	width: 40%;
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
 .ruleImage {
