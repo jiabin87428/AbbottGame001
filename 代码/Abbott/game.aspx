@@ -254,7 +254,7 @@
 					<img id="help" class="btnImage" src="assets/btn_wyyw.png" onclick="playSelf()"/>
 					<div id="play2" class="rowBtnView">
 						<img class="btnImage" src="assets/btn_help.png" onclick="showShare()"/>
-						<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('rank.aspx','大胃萌宝抢奶喝')"/>
+						<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('YJCode.html')"/>
 					</div>
 					<label id="timeLabel" class="resultLabel"></label>
 				</div>
@@ -410,7 +410,7 @@
 				mask.style.display = "";
 				if(targetId == null || targetId == "") {// 非助力
 					$("#help").hide();
-					$("#play1").show();
+					$("#play1").hide();
 					$("#play2").show();
 					$("#timeLabel").show();
 				}else {// 助力
@@ -435,6 +435,7 @@
 				//document.getElementById("<%=btnSubmit.ClientID %>").click();
 				
 				mui.showLoading("正在上传成绩..","div");
+				$("#play1").hide();
 				submitScores(xasNum, jzNum, emlNum);
 			});
 		}
@@ -470,10 +471,14 @@
 				mui.hideLoading();
 				count = data.Count;
 				$("#timeLabel").html('您剩余的游戏机会：' + data.Count + '次。');
+				localStorage.setItem('RestCount',count);
+				if(targetId == null || targetId == "") {// 非助力
+					$("#play1").show();
+				}
 			},
 			error:function(xhr,type,errorThrown){
-				mui.toast();
 				mui.hideLoading();
+				mui.toast('上传数据失败，网络错误！');
 				//异常处理；
 				console.log(type);
 			}
@@ -604,10 +609,30 @@
 	}
 	
 	// 跳转页面
-	function jumpPage(id, t, d){
+	function jumpPage(url) {
 		mui.openWindow({
-			url: 'http://www.angelyang.net/' + id,
+			//url: 'https://www.baidu.com',
+			url: 'http://www.angelyang.net/' + url,
+			show:{
+			  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+			},
 		});
+	}
+	// 跳转公众号
+	function jumpGZH() {
+		var btnArray = ['再看看', '去关注'];
+		mui.confirm('请关注精选超市，并回复“排行榜”', '', btnArray, function(e) {
+			if (e.index == 1) {
+				mui.openWindow({
+					url: 'https://mp.weixin.qq.com/s/Wnbqkp7aLO54Q_JUHl_TRQ',
+					show:{
+					  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+					},
+				});
+			} else {
+				
+			}
+		})
 	}
 	// 跳转第三方url
 	function jumpUrl(url) {

@@ -32,7 +32,6 @@
 		var targetrank3 = "";		// 发起者的恩美力排名
 		var targetcount = "";		// 有多少人为发起者助力
 		
-		
 		$("body").ready(function () {
 			userId = document.getElementById("lbUserID").innerHTML;
 			count = document.getElementById("lbCount").innerHTML;
@@ -129,6 +128,21 @@
 			});
 		})
 		
+		window.addEventListener('pageshow', function (e) {
+			if (e.persisted) {
+				//window.location.reload();
+				//form1.submit();
+				 //window.location.replace(document.referrer);
+				  
+				var restCount = localStorage.getItem('RestCount');
+				if (restCount != null) {
+					$("#timeLabel").html('剩余游戏机会：' + restCount + '次（为朋友助力不扣游戏次数哦）');
+					// 取完值马上清除
+					localStorage.removeItem('RestCount');
+				}
+			}
+		})
+		
 		// 点击即刻参与
 		function playGame() {			
 			if(count <= 0) {
@@ -148,10 +162,10 @@
 			}
 		}
 		
-		function jumpPage() {
+		function jumpPage(url) {
 			mui.openWindow({
 				//url: 'https://www.baidu.com',
-				url: 'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0OTc0MjkyMQ==#wechat_redirect',
+				url: 'http://www.angelyang.net/' + url,
 				show:{
 				  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
 				},
@@ -453,7 +467,7 @@
 			width: 100%;
 		} 
 		.subTitleImage {
-			width: 10%;
+			width: 100%;
 		}
 		.btnImage {
 			margin-top: 20px;
@@ -567,7 +581,7 @@
 			</div>
 			
 			<div class="columnView">
-				<img class="titleImage" src="assets/logo.png" onclick="jumpPage()"/>
+				<img class="titleImage" src="assets/logo.png"/>
 				<label id="help1" class="targetRanking"></label>
 				<img class="subTitleImage" src="assets/chick.png" onclick="showProduct()"/>
 				<div id="help2" class="helpView">
@@ -577,7 +591,7 @@
 				<img id="play1" class="btnImage" src="assets/btn_play.png" onclick="playGame()"/>
 				<div id="play2" class="rowBtnView">
 					<img class="btnImage" src="assets/btn_help.png" onclick="showShare()"/>
-					<img class="btnImage" src="assets/btn_point.png" onclick="clicked('rank.aspx','大胃萌宝抢奶喝')"/>
+					<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('YJCode.html')"/>
 				</div>
 				<div id="help3" class="rowBtnView">
 					<img id="play1" class="btnImage" src="assets/btn_wtzl.png" onclick="helpClick()"/>
