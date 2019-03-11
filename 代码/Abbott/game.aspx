@@ -6,9 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!--禁止双击放大页面-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<title>大胃萌宝抢奶喝</title>
+<title>云集有你 雅培添力</title>
 
-<script src="js/mui.min.js"></script>
+<script src="js/mui.js"></script>
 <link href="css/mui.min.css" rel="stylesheet"/>
 
 <link href="css/common.css" rel="stylesheet" />
@@ -56,7 +56,7 @@
 		width: 20%;
 		/* height: 50px; */
 		position: absolute;
-		/* top: 40%; */
+		top: 55%;
 		bottom: 250px;
 		left: 50%;
 		margin:-25px 0 0 -25px;
@@ -158,7 +158,7 @@
 	/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
 	@media screen and (max-height: 800px) { 
 		.maskSubView {
-			width: 80%;
+			width: 90%;
 		} 
 		.boxView {
 			bottom: 10%;
@@ -238,24 +238,25 @@
 				<div id="btnTap" style="display:none"  class="btnClass"></div>
 				<audio id="clickAudio" src="assets/click.mp3" style="display:none"></audio>
 				<audio id="countDownAudio" src="assets/countDown.mp3" style="display:none"></audio>
-				<audio id="startAudio" src="assets/start.mp3" style="display:none"></audio>
+				<audio id="startAudio" src="assets/start.mp3" type="audio/mpeg" style="display:none"></audio>
 				<audio id="finishAudio" src="assets/finish.mp3" style="display:none"></audio>
 			</div>
 			<div class="numClass" id="num"></div>
 			
 			<div id="mask" class="mask">
-				<div class="maskView">
-					<img class="maskSubView" src="assets/subBg.png" >
+				<div class="gameOverMaskView">
+					<img class="maskSubView" src="assets/subBg.png" onclick="jumpUrl('https://m.yj.ink/pzWuDz')">
 					<div id="resultLabelView" class="resultLabelView">
 						<label id="resultLabel" class="resultLabel"></label>
 					</div>
 					<!-- <button id="playAgain" type="button" style="width: 200px;height: 60px;" class="mui-btn mui-btn-warning" onclick="playAgain()">再玩一次</button> -->
-					<img class="btnImage" src="assets/btn_play_again.png" onclick="playAgain()"/>
-					<div class="rowBtnView">
+					<img id="play1" class="btnImage" src="assets/btn_play_again.png" onclick="playAgain()"/>
+					<img id="help" class="btnImage" src="assets/btn_wyyw.png" onclick="playSelf()"/>
+					<div id="play2" class="rowBtnView">
 						<img class="btnImage" src="assets/btn_help.png" onclick="showShare()"/>
 						<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('rank.aspx','大胃萌宝抢奶喝')"/>
 					</div>
-					<!--<label id="timeLabel" class="resultLabel">剩余游戏机会：1次</label>-->
+					<label id="timeLabel" class="resultLabel"></label>
 				</div>
 			</div>
 			
@@ -281,15 +282,15 @@
 		<!--<img class="bgImg" src="assets/gamebg.jpg" />-->
 		<div style="display:none">
 			<asp:Label ID="lbUserID" runat="server" Text="Label"></asp:Label>
-				<br />
-				<asp:Label ID="lbUserName" runat="server" Text="Label"></asp:Label>
-				<br />
-				<asp:Label ID="lbUserHeadUrl" runat="server" Text="Label"></asp:Label>
-				<br />
-				<asp:Label ID="lbCount" runat="server" Text="Label"></asp:Label>
-				<br />
-				<asp:Label ID="lbTargetID" runat="server" Text="Label"></asp:Label>
-				<br />
+			<br />
+			<asp:Label ID="lbUserName" runat="server" Text="Label"></asp:Label>
+			<br />
+			<asp:Label ID="lbUserHeadUrl" runat="server" Text="Label"></asp:Label>
+			<br />
+			<asp:Label ID="lbCount" runat="server" Text="Label"></asp:Label>
+			<br />
+			<asp:Label ID="lbTargetID" runat="server" Text="Label"></asp:Label>
+			<br />
 			<asp:TextBox ID="txtScore1" runat="server" Text="0"></asp:TextBox>
 			<asp:TextBox ID="txtScore2" runat="server" Text="0"></asp:TextBox>
 			<asp:TextBox ID="txtScore3" runat="server" Text="0"></asp:TextBox>
@@ -299,6 +300,10 @@
 </body>
 
 <script type="text/javascript">
+	var userId = "";		// 用户ID
+	var targetId = "";		// 发起者ID,助力用
+	var count = 0;			// 剩余游戏机会
+	
 	var result = [
 		{'name': '小安素', 'num': 0},
 		{'name': '菁挚', 'num': 0},
@@ -310,13 +315,21 @@
 	// mask.style.left = '100%';
 	btnTap.addEventListener('tap', function(event) {
 		let num = randomNum(0,2);
-		var para = ctrateAnimat(num);
+		var para = createAnimat(num);
 		// showSound("assets/click.mp3");
 		clickAudio.play();
 		if(para != null) {
 			para.start();
 		}
 	},false);
+	
+	$("body").ready(function () {
+		userId = document.getElementById("lbUserID").innerHTML;
+		
+		count = document.getElementById("lbCount").innerHTML;
+		
+		targetId = document.getElementById("lbTargetID").innerHTML;
+	})
 
 	/**
 	 * 产生音效
@@ -339,10 +352,16 @@
 	
 	// 准备开始,倒计时3秒
 	function readyClick() {
+		if(count <= 0) {
+			alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！');
+			return;
+		}
+		
 		isGaming = false;
 		readyTime = 3;
 		readyTimer = setInterval("readyCountDown()", 1000); 
 		var play = setTimeout("countDownAudio.play()",0);
+		//var start = setTimeout("startAudio.play()",4100);
 		readyTap.style.display = "none";
 		btnTap.style.display = "";
 	}
@@ -359,7 +378,11 @@
 				readyImg.src = "assets/1.png";
 			}else {
 				readyImg.src = "assets/go.png";
-				startAudio.play();
+				//var start = setTimeout("startAudio.play()",10);
+				document.addEventListener("WeixinJSBridgeReady", function () { 
+				    document.getElementById('startAudio').play(); 
+				    // document.getElementById('video').play(); 
+				}, false);
 			}
 			minutes = Math.floor(readyTime / 60);
 			seconds = Math.floor(readyTime % 60);
@@ -376,24 +399,85 @@
 				let xasNum = result[0].num;
 				let jzNum = result[1].num;
 				let emlNum = result[2].num;
-				resultLabel.innerHTML = '恭喜你已获得' + xasNum + '罐小安素,' + jzNum + '罐菁挚，' + emlNum + '罐恩美力<br>离大奖就差一点点了<br>快分享给好友，为你助力吧！';
+				
+				if(targetId == null || targetId == "") {// 非助力
+					resultLabel.innerHTML = '恭喜你获得' + xasNum + '罐小安素，' + jzNum + '罐菁挚，' + emlNum + '罐恩美力<br>离大奖就差一点点了<br>快分享给好友，为你助力吧！';
+				}else {// 助力
+					resultLabel.innerHTML = '恭喜帮Ta获得' + xasNum + '罐小安素，' + jzNum + '罐菁挚，' + emlNum + '罐恩美力<br>';
+				}
 				isGaming = false;
 				
 				mask.style.display = "";
+				if(targetId == null || targetId == "") {// 非助力
+					$("#help").hide();
+					$("#play1").show();
+					$("#play2").show();
+					$("#timeLabel").show();
+				}else {// 助力
+					$("#play1").hide();
+					$("#play2").hide();
+					$("#help").show();
+					$("#timeLabel").hide();
+				}
+				
+				//alert('targetID:' + targetID);
 				
 				// 给TextBox赋值
-				document.getElementById('<%=textScore1.ClientID%>').innerHTML= xasNum ;
-				document.getElementById('<%=textScore2.ClientID%>').innerHTML= jzNum ;
-				document.getElementById('<%=textScore3.ClientID%>').innerHTML= emlNum ;
+				//document.getElementById('<%=textScore1.ClientID%>').innerHTML= xasNum ;
+				//document.getElementById('<%=textScore2.ClientID%>').innerHTML= jzNum ;
+				//document.getElementById('<%=textScore3.ClientID%>').innerHTML= emlNum ;
 				//$('<%=txtScore1.ClientID %>').innerHTML = xasNum;	// txtScore1为小安素的分数
 				//$('<%=txtScore2.ClientID %>').innerHTML = jzNum;	// txtScore1为菁挚的分数
 				//$('<%=txtScore3.ClientID %>').innerHTML = emlNum;	// txtScore1为恩美力素的分数 
 				//form1.submit()
 				
 				// 调用上传方法
-				document.getElementById("<%=btnSubmit.ClientID %>").click();
+				//document.getElementById("<%=btnSubmit.ClientID %>").click();
+				
+				mui.showLoading("正在上传成绩..","div");
+				submitScores(xasNum, jzNum, emlNum);
 			});
 		}
+	}
+	
+	// 游戏结束,提交游戏数据
+	function submitScores(score1, score2, score3) {
+		var isTargeted = 0;	// 0是非助力,1是助力
+		if (targetId == "" || targetId == null) {// 非助力
+			isTargeted = 0;
+		}else {
+			isTargeted = 1;
+		}
+		
+		var params = {
+			'userid': userId,
+			'isTargeted': isTargeted,
+			'targetUserid': targetId,
+			'score1': score1,
+			'score2': score2,
+			'score3': score3,
+		}
+		
+		//alert('请求参数：' + JSON.stringify(params));
+		
+		mui.ajax('http://www.angelyang.net/uploadScore.ashx',{
+			data: params,
+			dataType:'json',//服务器返回json格式数据
+			type:'post',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			headers:{'Content-Type':'application/json'},	              
+			success:function(data){
+				mui.hideLoading();
+				count = data.Count;
+				$("#timeLabel").html('您剩余的游戏机会：' + data.Count + '次。');
+			},
+			error:function(xhr,type,errorThrown){
+				mui.toast();
+				mui.hideLoading();
+				//异常处理；
+				console.log(type);
+			}
+		});
 	}
 	
 	function removeBoll(bollId) {
@@ -402,7 +486,7 @@
 		bassView.removeChild(child)
 	}
 	
-	function ctrateAnimat(index) {
+	function createAnimat(index) {
 		console.log(index)
 		if (isGaming == false) {
 			return null;
@@ -437,11 +521,12 @@
 		let leftOrRight = randomNum(1,2) // 随机左右方向,1是左,2是右
 		let rdNum1 = leftOrRight == 1 ? randomNum(-100,-50) : randomNum(50,100);
 		let rdNum2 = randomNum(-100,-200);
+		
 		var boll = new Parabola({
 				el: "#" + div.id,
 				offset: [rdNum1, rdNum2],
 				curvature: 0.01,
-				duration: 500,
+				duration: 200,
 				callback:function(){
 					// alert("完成后回调")
 					removeBoll(div.id);
@@ -475,7 +560,20 @@
 	
 	// 再玩一次
 	function playAgain() {
+		if(count <= 0) {
+			alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！');
+			return;
+		}
 		gameInit();
+	}
+	// 我也要玩
+	function playSelf() {
+		mui.openWindow({
+			url: 'http://www.angelyang.net/rules.aspx',
+			show:{
+			  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+			},
+		});
 	}
 	
 	// 游戏初始化
@@ -509,6 +607,12 @@
 	function jumpPage(id, t, d){
 		mui.openWindow({
 			url: 'http://www.angelyang.net/' + id,
+		});
+	}
+	// 跳转第三方url
+	function jumpUrl(url) {
+		mui.openWindow({
+			url: url
 		});
 	}
 	
@@ -551,7 +655,7 @@
 		
 		wx.ready(function () {
 		     wx.onMenuShareAppMessage({
-		        title: '大胃萌宝抢奶喝', // 分享标题
+		        title: '云集有你 雅培添力', // 分享标题
 		        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
 		        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
 		        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
@@ -566,7 +670,7 @@
 		        }
 		    });
 		    wx.onMenuShareTimeline({
-		    	 title: '大胃萌宝抢奶喝', // 分享标题
+		    	 title: '云集有你 雅培添力', // 分享标题
 		        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
 		        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
 		        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标

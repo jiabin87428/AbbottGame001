@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title> 大胃萌宝抢奶喝 </title>
+    <title>云集有你 雅培添力</title>
     <script src="js/mui.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
     <link href="css/mui.css" rel="stylesheet"/>
@@ -17,6 +17,9 @@
 		var rule = 1;	// 	显示游戏规则-1 2 3
 		
 		$("body").ready(function () {
+			$("#provBtn_opi").css("visibility","hidden");
+			$("#provBtn_rule").css("visibility","hidden");
+			
 			$("#maskView").hide();
 			$("#ruleMask").hide();
 			$("#joinBtn").click(function () {
@@ -49,6 +52,8 @@
 			　　　　$("#maskView").show();
 			　　}
 			);
+			$("#provBtn_opi").css("visibility","hidden");
+			$("#nextBtn_opi").css("visibility","visible");
 		}
 		// 隐藏产品
 		function hideProduct() {
@@ -59,8 +64,7 @@
 			　　function(){
 					$("#maskView").hide();
 					showAlert = 1;
-					setMaskState('opi', showAlert)
-					$("#downBtn_opi").css("visibility","visible");
+					setMaskState('opi', showAlert);
 			　　}
 			);
 		}
@@ -72,9 +76,11 @@
 			　　"slow",
 			　　null,
 			　　function(){
-			　　　　$("#ruleMask").show();
+					$("#ruleMask").show();
 			　　}
 			);
+			$("#provBtn_rule").css("visibility","hidden");
+			$("#nextBtn_rule").css("visibility","visible");
 		}
 		
 		// 隐藏规则
@@ -87,26 +93,56 @@
 					$("#ruleMask").hide();
 					rule = 1;
 					setMaskState('rule', rule)
-					$("#downBtn_rule").css("visibility","visible");
 			　　}
 			);
 		}
 		
+		function scrollToProv(type) {
+			if (type == 'opi') {// 产品
+				if (showAlert > 1) {
+					showAlert--;
+					if (showAlert == 1) {
+						$("#provBtn_opi").css("visibility","hidden");
+					}
+				}
+				if(showAlert < 4) {
+					$("#nextBtn_opi").css("visibility","visible");
+				}
+				setMaskState('opi', showAlert);
+			}else {// 规则
+				if (rule > 1) {
+					rule--;
+					if (rule == 1) {
+						$("#provBtn_rule").css("visibility","hidden");
+					}
+				}
+				if(rule < 3) {
+					$("#nextBtn_rule").css("visibility","visible");
+				}
+				setMaskState('rule', rule);
+			}
+		}
 		function scrollToNext(type) {
 			if (type == 'opi') {// 产品
 				if (showAlert < 4) {
 					showAlert++;
 					if (showAlert == 4) {
-						$("#downBtn_opi").css("visibility","hidden");
+						$("#nextBtn_opi").css("visibility","hidden");
 					}
+				}
+				if(showAlert > 1) {
+					$("#provBtn_opi").css("visibility","visible");
 				}
 				setMaskState('opi', showAlert);
 			}else {// 规则
 				if (rule < 3) {
 					rule++;
 					if (rule == 3) {
-						$("#downBtn_rule").css("visibility","hidden");
+						$("#nextBtn_rule").css("visibility","hidden");
 					}
+				}
+				if(rule > 1) {
+					$("#provBtn_rule").css("visibility","visible");
 				}
 				setMaskState('rule', rule);
 			}
@@ -181,6 +217,15 @@
 	.ruleImage {
 		margin-top: 20px;
 		margin-bottom: 20px;
+	}
+	
+	.maskBtnView {
+		width: 80%;
+		
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-around;
 	}
 	
 	.maskView {
@@ -263,13 +308,21 @@
 			<div id="maskView" class="maskView">
 				<img class="closeBtn" src="assets/close.png"  onclick="hideProduct()"/>
 				<img id="opiImg" class="opiImg" src="assets/opi_1.png"/>
-				<img id="downBtn_opi" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext('opi')" />
+				<!--<img id="downBtn_opi" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext('opi')" />-->
+				<div class="maskBtnView">
+					<img id="provBtn_opi" class="btnImage" src="assets/btn_prov.png" onclick="scrollToProv('opi')"/>
+					<img id="nextBtn_opi" class="btnImage" src="assets/btn_next.png" onclick="scrollToNext('opi')"/>
+				</div>
 			</div>
 			
 			<div id="ruleMask" class="maskView">
 				<img class="closeBtn" src="assets/close.png"  onclick="hideRule()"/>
 				<img id="ruleImg" class="noticeImg" src="assets/rule_1.png"/>
-				<img id="downBtn_rule" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext('rule')" />
+				<!--<img id="downBtn_rule" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext('rule')" />-->
+				<div class="maskBtnView">
+					<img id="provBtn_rule" class="btnImage" src="assets/btn_prov.png" onclick="scrollToProv('rule')"/>
+					<img id="nextBtn_rule" class="btnImage" src="assets/btn_next.png" onclick="scrollToNext('rule')"/>
+				</div>
 			</div>
 			
 			<div class="columnView">

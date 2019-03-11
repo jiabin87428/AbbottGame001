@@ -34,6 +34,8 @@
             this.timerId = null;
             this.elOriginalLeft = toInteger(this.$el.css("left"));
             this.elOriginalTop = toInteger(this.$el.css("top"));
+			// this.elOriginalTop = toInteger(window.screen.width) - toInteger(this.$el.css("bottom"));
+			console.log('elOriginalLeft:' + this.elOriginalLeft + ',elOriginalTop:' + this.elOriginalTop)
             // this.driftX X轴的偏移总量
             //this.driftY Y轴的偏移总量
             if (ops.targetEl) {
@@ -120,7 +122,6 @@
                 x = this.driftX * ((now - this.begin) / this.duration);
                 //每一步的Y轴的位置y = a*x*x + b*x + c;   c==0;
                 y = this.curvature * x * x + this.b * x;
-
                 this.domove(x, y);
                 if (typeof ops.stepCallback === 'function') {
                     ops.stepCallback.call(this,x,y,alpha);
@@ -170,6 +171,7 @@
          * 重置
          */
         reset: function (x, y) {
+			
             this.stop();
             x = x ? x : 0;
             y = y ? y : 0;

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>大胃萌宝抢奶喝</title>
+		<title>云集有你 雅培添力</title>
 		<script src="js/mui.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/common.js"></script>
@@ -21,10 +21,18 @@
 			align-items: center;
 			justify-content: center;
 		}
+		
+		.phTitleImgView {
+			width: 100%;
+		}
 		.phListView {
 			position: absolute;
 			width: 85%;
 			height: 92%;
+			top: 3%;
+			left:50%;
+			margin:0 0 0 -42%;
+			
 			/* background-color: #0000FF; */
 			
 			display: flex;
@@ -84,6 +92,10 @@
 			align-items: center;
 			justify-content: center;
 		}
+		.phItemMyImg {
+			width: 40%;
+			height: auto;
+		}
 		.phItemHeadImg {
 			/* width: auto;
 			height: 120%; */
@@ -97,7 +109,7 @@
 			height: 32px;
 			position: absolute;
 			/* width: 100%; */
-			top: -90%;
+			top: -20px;
 			left: -7%;
 		}
 		.phItemScore_jz {
@@ -119,8 +131,8 @@
 			margin-top: -5px;
 		}
 		.phItemMCImg {
-			width: auto;
-			height: 60%;
+			width: 20%;
+			/* height: 60%; */
 			margin-top: -5px;
 			margin-right: 20px;
 		}
@@ -153,9 +165,6 @@
 			color: #FFFFFF;
 			font-weight: bold;
 			/* text-shadow: 0 0 0.2em #F87, 0 0 0.2em #F87; */
-		}
-		.phItemMyImg {
-			height: 80%;
 		}
 		
 		/* 设置了浏览器高度不大于1000px时 图片显示的宽度 */ 
@@ -204,12 +213,17 @@
 		
 		/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
 		@media screen and (max-height: 630px) { 
-			.phbgView {
-				width: 80%;
-			}
 			.phItemHeadImg {
 				width: 25px;
 				height: 25px;
+			}
+			.phItemHgImg {
+				width: 25px;
+				height: 19.6px;
+				top: -13px;
+			}
+			.phTitleImgView {
+				margin-top: -20px;
 			}
 			
 			.phbgView {
@@ -243,14 +257,14 @@
 				font-size: 14px;
 			}
 			.phItemMyImg {
-				width: auto;
-				height: 100%;
+				/* width: auto;
+				height: 100%; */
 			}
 		}
 	</style>
 	<body>
 		<div class="baseViewColumn">
-			<img id="titleImg" class="titleImgView" src="assets/ph_jz_title.png"/>
+			<img id="titleImg" class="phTitleImgView" src="assets/ph_jz_title.png"/>
 			<div class="phbgView">
 				<img id="bgImg" class="titleImgView" src="assets/ph_jz_Bg.png"/>
 				<div id="cellList" class="phListView">

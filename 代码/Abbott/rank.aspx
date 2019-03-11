@@ -5,7 +5,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>大胃萌宝抢奶喝</title>
+		<title>云集有你 雅培添力</title>
 		<script src="js/mui.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<link href="css/mui.css" rel="stylesheet"/>
@@ -91,7 +91,7 @@
 			}
 		}
 		
-		/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
+		/* 设置了浏览器高度不大于630px时 图片显示的宽度 */ 
 		@media screen and (max-height: 630px) { 
 			.point-item-view {
 				width: 70%;
@@ -100,6 +100,9 @@
 				font-size: 10px;
 				height: 20px;
 				padding: 0px 0px 0px 0px;
+			}
+			.point-title {
+				margin-top: -30px;
 			}
 		}
 	</style>

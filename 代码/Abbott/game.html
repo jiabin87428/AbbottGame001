@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>大胃萌宝抢奶喝</title>
 
-<script src="js/mui.min.js"></script>
+<script src="js/mui.js"></script>
 <link href="css/mui.min.css" rel="stylesheet"/>
 
 <link href="css/common.css" rel="stylesheet" />
@@ -23,6 +23,18 @@
 
 <link type="text/css" rel="stylesheet" href="css/time_css.css" />
 <link href="css/mui.css" rel="stylesheet" />
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<script>
+	var _hmt = _hmt || [];
+	(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?50be6c11b00fe4165f77dfe57c6093ee";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+	})();
+</script>
 </head>
 
 <style>
@@ -42,7 +54,7 @@
 		width: 20%;
 		/* height: 50px; */
 		position: absolute;
-		/* top: 40%; */
+		top: 55%;
 		bottom: 250px;
 		left: 50%;
 		margin:-25px 0 0 -25px;
@@ -91,6 +103,7 @@
 	
 	.numClass {
 		position: absolute;
+		display: none;
 		right: 10px;
 		top: 10px;
 	}
@@ -112,20 +125,21 @@
 		width: 100%;
 	}
 	.scoreText {
-		/* background-color: #007AFF; */
+		/*background-color: #007AFF; */
 		position: absolute;
 		bottom: 15%;
-		right: 35%;
+		right: 0px;
+		width: 50%;
 		color: #FFFFFF;
 		font-size: 14px;
-		text-align: center;
+		text-align: left;
 		font-style: italic;
 		font-weight: 700;
 	}
 	
 	.boxView {
 		position: absolute;
-		bottom: 60px;
+		bottom: 10%;
 		width: 100%;
 	}
 	
@@ -139,13 +153,32 @@
 		}
 	}
 	
-	/* 设置了浏览器高度不大于900px时 图片显示的宽度 */ 
+	/* 设置了浏览器高度不大于800px时 图片显示的宽度 */ 
+	@media screen and (max-height: 800px) { 
+		.maskSubView {
+			width: 90%;
+		} 
+		.boxView {
+			bottom: 10%;
+		}
+		.shareSubView {
+			width: 80%;
+		}
+	}
+	
+	/* 设置了浏览器高度不大于600px时 图片显示的宽度 */ 
 	@media screen and (max-height: 600px) { 
 		.maskSubView {
 			width: 60%;
 		} 
+		.boxView {
+			bottom: 15%;
+		}
 		.shareSubView {
 			width: 80%;
+		}
+		.scoreText {
+			font-size: 12px;
 		}
 	}
 	
@@ -158,7 +191,7 @@
     0%{-webkit-transform: rotateZ(0deg);}
     100%{-webkit-transform: rotateZ(360deg);}
 }
-#musicControl { position:fixed;right:5px;top:100px;margin-top:0;display:inline-block;z-index:99999999}
+#musicControl { position:fixed;right:5px;top:70px;margin-top:0;display:inline-block;z-index:99999999}
 #musicControl a { display:inline-block;width:25px;height:25px;overflow:hidden;background:url('assets/play.png') no-repeat;background-size:100%;}
 #musicControl a audio{width:100%;height:56px;}
 #musicControl a.stop { background-position:left bottom;}
@@ -169,7 +202,7 @@
 
 <body>
 	<form id="form1" runat="server">
-		<div id="baseView" class="baseView">
+		<div id="baseView" class="gameBaseView">
 			<div class="scoreView">
 				<div id="scoreItem" class="scoreItem">
 					<img class="scoreImg" src="assets/xas.png" >
@@ -209,18 +242,19 @@
 			<div class="numClass" id="num"></div>
 			
 			<div id="mask" class="mask">
-				<div class="maskView">
-					<img class="maskSubView" src="assets/subBg.png" >
+				<div class="gameOverMaskView">
+					<img class="maskSubView" src="assets/subBg.png" onclick="" >
 					<div id="resultLabelView" class="resultLabelView">
 						<label id="resultLabel" class="resultLabel"></label>
 					</div>
 					<!-- <button id="playAgain" type="button" style="width: 200px;height: 60px;" class="mui-btn mui-btn-warning" onclick="playAgain()">再玩一次</button> -->
-					<img class="btnImage" src="assets/btn_play_again.png" onclick="playAgain()"/>
-					<div class="rowBtnView">
+					<img id="play1" class="btnImage" src="assets/btn_play_again.png" onclick="playAgain()"/>
+					<img id="help" class="btnImage" src="assets/btn_wyyw.png" onclick="playSelf()"/>
+					<div id="play2" class="rowBtnView">
 						<img class="btnImage" src="assets/btn_help.png" onclick="showShare()"/>
-						<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('myPoint.html','大胃萌宝抢奶喝')"/>
+						<img class="btnImage" src="assets/btn_point.png" onclick="jumpPage('rank.aspx','大胃萌宝抢奶喝')"/>
 					</div>
-					<label id="timeLabel" class="resultLabel">剩余游戏机会：1次</label>
+					<label id="timeLabel" class="resultLabel"></label>
 				</div>
 			</div>
 			
@@ -238,11 +272,36 @@
 				</a>
 			</span>
 		</div>
-		<img class="bgImg" src="assets/gamebg.jpg" />
+		<div style="display:none">
+			<label id="textScore1" runat="server"></label>
+			<label id="textScore2" runat="server"></label>
+			<label id="textScore3" runat="server"></label>
+		</div>
+		<!--<img class="bgImg" src="assets/gamebg.jpg" />-->
+		<div style="display:none">
+			<asp:Label ID="lbUserID" runat="server" Text="Label"></asp:Label>
+			<br />
+			<asp:Label ID="lbUserName" runat="server" Text="Label"></asp:Label>
+			<br />
+			<asp:Label ID="lbUserHeadUrl" runat="server" Text="Label"></asp:Label>
+			<br />
+			<asp:Label ID="lbCount" runat="server" Text="Label"></asp:Label>
+			<br />
+			<asp:Label ID="lbTargetID" runat="server" Text="Label"></asp:Label>
+			<br />
+			<asp:TextBox ID="txtScore1" runat="server" Text="0"></asp:TextBox>
+			<asp:TextBox ID="txtScore2" runat="server" Text="0"></asp:TextBox>
+			<asp:TextBox ID="txtScore3" runat="server" Text="0"></asp:TextBox>
+			<asp:Button ID="btnSubmit" runat="server" Text="提交分数" OnClick="btnSubmit_Click" />
+		</div>
 	</form>
 </body>
 
 <script type="text/javascript">
+	var userId = "";		// 用户ID
+	var targetId = "";		// 发起者ID,助力用
+	var count = 0;			// 剩余游戏机会
+	
 	var result = [
 		{'name': '小安素', 'num': 0},
 		{'name': '菁挚', 'num': 0},
@@ -254,13 +313,17 @@
 	// mask.style.left = '100%';
 	btnTap.addEventListener('tap', function(event) {
 		let num = randomNum(0,2);
-		var para = ctrateAnimat(num);
+		var para = createAnimat(num);
 		// showSound("assets/click.mp3");
 		clickAudio.play();
 		if(para != null) {
 			para.start();
 		}
 	},false);
+	
+	$("body").ready(function () {
+		
+	})
 
 	/**
 	 * 产生音效
@@ -283,10 +346,16 @@
 	
 	// 准备开始,倒计时3秒
 	function readyClick() {
+		if(count <= 0) {
+			alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！');
+			return;
+		}
+		
 		isGaming = false;
 		readyTime = 3;
 		readyTimer = setInterval("readyCountDown()", 1000); 
-		var play = setTimeout("countDownAudio.play()",700);
+		var play = setTimeout("countDownAudio.play()",0);
+		//var start = setTimeout("startAudio.play()",4100);
 		readyTap.style.display = "none";
 		btnTap.style.display = "";
 	}
@@ -303,7 +372,8 @@
 				readyImg.src = "assets/1.png";
 			}else {
 				readyImg.src = "assets/go.png";
-				startAudio.play();
+				//countDownAudio.stop();
+				var start = setTimeout("startAudio.play()",10);
 			}
 			minutes = Math.floor(readyTime / 60);
 			seconds = Math.floor(readyTime % 60);
@@ -320,13 +390,71 @@
 				let xasNum = result[0].num;
 				let jzNum = result[1].num;
 				let emlNum = result[2].num;
-				resultLabel.innerHTML = '恭喜你已获得' + xasNum + '罐小安素,' + jzNum + '罐菁挚，' + emlNum + '罐恩美力<br>离大奖就差一点点了<br>快分享给好友，为你助力吧！';
+				
+				if(targetId == null || targetId == "") {// 非助力
+					resultLabel.innerHTML = '恭喜你获得' + xasNum + '罐小安素，' + jzNum + '罐菁挚，' + emlNum + '罐恩美力<br>离大奖就差一点点了<br>快分享给好友，为你助力吧！';
+				}else {// 助力
+					resultLabel.innerHTML = '恭喜帮Ta获得' + xasNum + '罐小安素，' + jzNum + '罐菁挚，' + emlNum + '罐恩美力<br>';
+				}
 				isGaming = false;
 				
 				mask.style.display = "";
-				// mask.style.left = '0px';
+				if(targetId == null || targetId == "") {// 非助力
+					$("#help").hide();
+					$("#play1").show();
+					$("#play2").show();
+					$("#timeLabel").show();
+				}else {// 助力
+					$("#play1").hide();
+					$("#play2").hide();
+					$("#help").show();
+					$("#timeLabel").hide();
+				}
+				
+				// mui.showLoading("正在上传成绩..","div");
+				// submitScores(xasNum, jzNum, emlNum);
 			});
 		}
+	}
+	
+	// 游戏结束,提交游戏数据
+	function submitScores(score1, score2, score3) {
+		var isTargeted = 0;	// 0是非助力,1是助力
+		if (targetId == "" || targetId == null) {// 非助力
+			isTargeted = 0;
+		}else {
+			isTargeted = 1;
+		}
+		
+		var params = {
+			'userid': userId,
+			'isTargeted': isTargeted,
+			'targetUserid': targetId,
+			'score1': score1,
+			'score2': score2,
+			'score3': score3,
+		}
+		
+		//alert('请求参数：' + JSON.stringify(params));
+		
+		mui.ajax('http://www.angelyang.net/uploadScore.ashx',{
+			data: params,
+			dataType:'json',//服务器返回json格式数据
+			type:'post',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			headers:{'Content-Type':'application/json'},	              
+			success:function(data){
+				mui.hideLoading();
+				count = data.Count;
+				$("#timeLabel").html('您剩余的游戏机会：' + data.Count + '次。');
+			},
+			error:function(xhr,type,errorThrown){
+				mui.toast();
+				mui.hideLoading();
+				//异常处理；
+				console.log(type);
+			}
+		});
 	}
 	
 	function removeBoll(bollId) {
@@ -335,7 +463,7 @@
 		bassView.removeChild(child)
 	}
 	
-	function ctrateAnimat(index) {
+	function createAnimat(index) {
 		console.log(index)
 		if (isGaming == false) {
 			return null;
@@ -370,6 +498,7 @@
 		let leftOrRight = randomNum(1,2) // 随机左右方向,1是左,2是右
 		let rdNum1 = leftOrRight == 1 ? randomNum(-100,-50) : randomNum(50,100);
 		let rdNum2 = randomNum(-100,-200);
+		
 		var boll = new Parabola({
 				el: "#" + div.id,
 				offset: [rdNum1, rdNum2],
@@ -382,16 +511,16 @@
 				stepCallback:function(x,y,alpha){
 					// console.log(alpha);
 					div.style.opacity = alpha; 
-					$("<div>").appendTo("body").css({
-						"position": "absolute",
-						"top": this.elOriginalTop + y,
-						"left":this.elOriginalLeft + x,
-						"background-color":"#CDCDCD",
+					//$("<div>").appendTo("body").css({
+						//"position": "absolute",
+						//"top": this.elOriginalTop + y,
+						//"left":this.elOriginalLeft + x,
+						//"background-color":"#CDCDCD",
 						// 抛物线
 		// 				"width":"5px",
 		// 				"height":"5px",
 		// 				"border-radius": "5px"
-					});
+					//});
 				}
 			});
 		return boll;
@@ -408,7 +537,20 @@
 	
 	// 再玩一次
 	function playAgain() {
+		if(count <= 0) {
+			alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！');
+			return;
+		}
 		gameInit();
+	}
+	// 我也要玩
+	function playSelf() {
+		mui.openWindow({
+			url: 'http://www.angelyang.net/rules.aspx',
+			show:{
+			  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+			},
+		});
 	}
 	
 	// 游戏初始化
@@ -441,7 +583,7 @@
 	// 跳转页面
 	function jumpPage(id, t, d){
 		mui.openWindow({
-			url: id,
+			url: 'http://www.angelyang.net/' + id,
 		});
 	}
 	
@@ -465,27 +607,80 @@
 <script>
 	var play_filter=document.getElementById('music_play_filter');
 	$("body").ready(function () {
-// 		play_filter.addEventListener('click', function(){
-// 		    just_play(1);
-// 		});
-// 		play_filter.addEventListener('touchstart', function(){
-// 		    just_play(1);
-// 		});
-// 		play_filter.addEventListener('touchend', function(){
-// 		    just_play(1);
-// 		});
-// 		play_filter.addEventListener('touchmove', function(){
-// 		    just_play(1);
-// 		});
-// 		play_filter.addEventListener('mousedown', function(){
-// 		    just_play(1);
-// 		});
-// 		play_filter.addEventListener('mouseup', function(){
-// 		    just_play(1);
-// 		});
-// 		play_filter.addEventListener('mousemove',function(){
-// 		    just_play(1);
-// 		});
+		wx.config({
+		    debug: false,
+		    appId: '<%=appId %>', 
+		    timestamp: <%=timestamp %>,
+		    nonceStr: '<%=nonceStr %>',
+		    signature: '<%=signature %>',
+		    jsApiList: [
+		      'onMenuShareTimeline',
+		      'onMenuShareAppMessage',
+		      'hideMenuItems',
+		      'showMenuItems',
+		      'hideAllNonBaseMenuItem',
+		      'showAllNonBaseMenuItem',
+		      
+		    ]
+		  });
+		
+		wx.ready(function () {
+		     wx.onMenuShareAppMessage({
+		        title: '大胃萌宝抢奶喝', // 分享标题
+		        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
+		        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
+		        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
+		        type: 'link', // 分享类型,music、video或link，不填默认为link
+		        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+		        success: function () { 
+		            // 用户确认分享后执行的回调函数
+		            
+		        },
+		        cancel: function () { 
+		            // 用户取消分享后执行的回调函数
+		        }
+		    });
+		    wx.onMenuShareTimeline({
+		    	 title: '大胃萌宝抢奶喝', // 分享标题
+		        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
+		        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
+		        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
+		        type: 'link', // 分享类型,music、video或link，不填默认为link
+		        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+		        success: function () { 
+		            // 用户确认分享后执行的回调函数
+		            
+		        },
+		        cancel: function () { 
+		            // 用户取消分享后执行的回调函数
+		        }
+		    });
+		});
+		
+		//musicfx.play();
+		//clickAudio.play();
+		
+ 		play_filter.addEventListener('click', function(){
+ 		    just_play(1);
+ 		});
+ 		play_filter.addEventListener('touchstart', function(){
+ 		    just_play(1);
+ 		});
+ 		play_filter.addEventListener('touchend', function(){
+ 		    just_play(1);
+ 		});
+ 		play_filter.addEventListener('touchmove', function(){
+ 		    just_play(1);
+ 		});
+ 		play_filter.addEventListener('mousedown', function(){
+ 		    just_play(1);
+ 		});
+ 		play_filter.addEventListener('mouseup', function(){
+ 		    just_play(1);
+ 		});
+ 		play_filter.addEventListener('mousemove',function(){
+ 		    just_play(1);
+ 		});
 	})
 	
 	function play_music(){
@@ -517,11 +712,18 @@
         }
     }
     window.onload=function(){
-//         if (!is_weixn()){
-//             just_play();
-//         }
-		just_play();
+         if (!is_weixn()){
+             //just_play();
+         }
+		//just_play();
     }
+</script>
+<!--<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
+<script type="text/javascript">
+    document.addEventListener("WeixinJSBridgeReady", function () { 
+        document.getElementById('musicfx').play(); 
+        // document.getElementById('video').play(); 
+    }, false);
 </script>
 
 </html>

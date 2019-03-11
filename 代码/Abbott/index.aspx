@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title> 大胃萌宝抢奶喝 </title>
+    <title>云集有你 雅培添力</title>
     <script src="js/mui.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/common.js"></script>
@@ -22,6 +22,7 @@
 		
 		//var targetID = getUrlParam("targetId"); 
 		var userId = "";			// 当前用户的ID
+		var count = 0;				// 剩余游戏机会
 		
 		// 助力页用
 		var targetID = "";			// 发起者的ID
@@ -34,6 +35,8 @@
 		
 		$("body").ready(function () {
 			userId = document.getElementById("lbUserID").innerHTML;
+			count = document.getElementById("lbCount").innerHTML;
+			$("#timeLabel").html('剩余游戏机会：' + count + '次（为朋友助力不扣游戏次数哦）');
 			
 			targetID = document.getElementById("lbTargetID").innerHTML;
 			targetusername = '<%=targetusername %>';
@@ -42,8 +45,15 @@
 			targetrank3 = '<%=targetrank3 %>';
 			targetcount = '<%=targetcount %>';
 			
+			if(targetusername.length >= 3) {
+				var first = targetusername.substring(0,1);
+				var last = targetusername.substring(targetusername.length-1, targetusername.length);
+				targetusername = first + '**' + last;
+			}
 			
-			//alert(targetID)
+			//alert('tatgetId:' + targetID);
+			$("#provBtn_opi").css("visibility","hidden");
+			$("#provBtn_rule").css("visibility","hidden");
 			
 			$("#maskView").hide();
 			$("#ruleMask").hide();
@@ -57,7 +67,8 @@
 				$("#play1").hide();
 				$("#play2").hide();
 				$("#helpLabel").html('已有' + targetcount + '人为Ta助力');
-				$("#help1").html(targetusername + ' 小安素：No.' + targetrank1 + '菁挚：No.' + targetrank2 + '恩美力：No.' + targetrank3);
+				var maxRank = Math.min(targetrank1, targetrank2, targetrank3);
+				$("#help1").html(targetusername + '目前最高排名：' + 'No.' + maxRank);
 				//alert('传过来的ID:' + targetID + '此页为助力页');
 			}
 			
@@ -86,7 +97,7 @@
 			
 			wx.ready(function () {
 			     wx.onMenuShareAppMessage({
-			        title: '大胃萌宝抢奶喝', // 分享标题
+			        title: '云集有你 雅培添力', // 分享标题
 			        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
 			        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
 			        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
@@ -101,7 +112,7 @@
 			        }
 			    });
 			    wx.onMenuShareTimeline({
-			    	 title: '大胃萌宝抢奶喝', // 分享标题
+			    	 title: '云集有你 雅培添力', // 分享标题
 			        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
 			        link: 'http://www.angelyang.net/rules.aspx?tid=' + userId, // 分享链接
 			        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
@@ -119,10 +130,9 @@
 		})
 		
 		// 点击即刻参与
-		function playGame() {
-			var count = document.getElementById("lbCount").innerHTML;
+		function playGame() {			
 			if(count <= 0) {
-				alert('您已无游戏机会')
+				alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！')
 			}else{
 				document.getElementById("<%=btnGame.ClientID %>").click();
 			}
@@ -136,6 +146,16 @@
 			}else if (isHelped == '0') {// 未为Ta助过力,进入游戏页
 				document.getElementById("<%=btnGame.ClientID %>").click();
 			}
+		}
+		
+		function jumpPage() {
+			mui.openWindow({
+				//url: 'https://www.baidu.com',
+				url: 'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0OTc0MjkyMQ==#wechat_redirect',
+				show:{
+				  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
+				},
+			});
 		}
 		
 		/**
@@ -173,6 +193,8 @@
 			　　　　$("#maskView").show();
 			　　}
 			);
+			$("#provBtn_opi").css("visibility","hidden");
+			$("#nextBtn_opi").css("visibility","visible");
 		}
 		// 隐藏产品
 		function hideProduct() {
@@ -183,8 +205,7 @@
 			　　function(){
 					$("#maskView").hide();
 					showAlert = 1;
-					setMaskState('opi', showAlert)
-					$("#downBtn_opi").css("visibility","visible");
+					setMaskState('opi', showAlert);
 			　　}
 			);
 		}
@@ -196,9 +217,11 @@
 			　　"slow",
 			　　null,
 			　　function(){
-			　　　　$("#ruleMask").show();
+					$("#ruleMask").show();
 			　　}
 			);
+			$("#provBtn_rule").css("visibility","hidden");
+			$("#nextBtn_rule").css("visibility","visible");
 		}
 		
 		// 隐藏规则
@@ -211,9 +234,59 @@
 					$("#ruleMask").hide();
 					rule = 1;
 					setMaskState('rule', rule)
-					$("#downBtn_rule").css("visibility","visible");
 			　　}
 			);
+		}
+		
+		function scrollToProv(type) {
+			if (type == 'opi') {// 产品
+				if (showAlert > 1) {
+					showAlert--;
+					if (showAlert == 1) {
+						$("#provBtn_opi").css("visibility","hidden");
+					}
+				}
+				if(showAlert < 4) {
+					$("#nextBtn_opi").css("visibility","visible");
+				}
+				setMaskState('opi', showAlert);
+			}else {// 规则
+				if (rule > 1) {
+					rule--;
+					if (rule == 1) {
+						$("#provBtn_rule").css("visibility","hidden");
+					}
+				}
+				if(rule < 3) {
+					$("#nextBtn_rule").css("visibility","visible");
+				}
+				setMaskState('rule', rule);
+			}
+		}
+		function scrollToNext(type) {
+			if (type == 'opi') {// 产品
+				if (showAlert < 4) {
+					showAlert++;
+					if (showAlert == 4) {
+						$("#nextBtn_opi").css("visibility","hidden");
+					}
+				}
+				if(showAlert > 1) {
+					$("#provBtn_opi").css("visibility","visible");
+				}
+				setMaskState('opi', showAlert);
+			}else {// 规则
+				if (rule < 3) {
+					rule++;
+					if (rule == 3) {
+						$("#nextBtn_rule").css("visibility","hidden");
+					}
+				}
+				if(rule > 1) {
+					$("#provBtn_rule").css("visibility","visible");
+				}
+				setMaskState('rule', rule);
+			}
 		}
 		
 		// 展示分享方法
@@ -237,26 +310,6 @@
 			　　　　$("#shareMask").hide();
 			　　}
 			);
-		}
-		
-		function scrollToNext(type) {
-			if (type == 'opi') {// 产品
-				if (showAlert < 4) {
-					showAlert++;
-					if (showAlert == 4) {
-						$("#downBtn_opi").css("visibility","hidden");
-					}
-				}
-				setMaskState('opi', showAlert);
-			}else {// 规则
-				if (rule < 3) {
-					rule++;
-					if (rule == 3) {
-						$("#downBtn_rule").css("visibility","hidden");
-					}
-				}
-				setMaskState('rule', rule);
-			}
 		}
 		
 		// 设置mask图片 type：'rule'/'opi'
@@ -344,7 +397,7 @@
 	}
 	
 	.targetRanking {
-		padding: 5px 5px 5px 5px;
+		padding: 2px 20px 2px 20px;
 		border-radius: 30px;
 		vertical-align: middle;
 		text-align: center;
@@ -374,6 +427,24 @@
 		color: #8403FD;
 		font-size: 14px;
 		font-weight: 700;
+	}
+	.timeLabel {
+		width: 90%;
+		line-height: 20px;
+		word-wrap:break-word;
+		font-size: 12px;
+		text-align: center;
+		vertical-align: middle;
+		color: #FFFFFF;
+	}
+	
+	.maskBtnView {
+		width: 80%;
+		
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-around;
 	}
 	
 	/* 设置了浏览器高度不大于1000px时 图片显示的宽度 */ 
@@ -472,13 +543,21 @@
 			<div id="maskView" class="maskView">
 				<img class="closeBtn" src="assets/close.png"  onclick="hideProduct()"/>
 				<img id="opiImg" class="opiImg" src="assets/opi_1.png"/>
-				<img id="downBtn_opi" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext('opi')" />
+				<!--<img id="downBtn_opi" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext('opi')" />-->
+				<div class="maskBtnView">
+					<img id="provBtn_opi" class="btnImage" src="assets/btn_prov.png" onclick="scrollToProv('opi')"/>
+					<img id="nextBtn_opi" class="btnImage" src="assets/btn_next.png" onclick="scrollToNext('opi')"/>
+				</div>
 			</div>
 			
 			<div id="ruleMask" class="maskView">
 				<img class="closeBtn" src="assets/close.png"  onclick="hideRule()"/>
 				<img id="ruleImg" class="noticeImg" src="assets/rule_1.png"/>
-				<img id="downBtn_rule" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext('rule')" />
+				<!--<img id="downBtn_rule" class="downBtn" src="assets/btn_down.png" onclick="scrollToNext('rule')" />-->
+				<div class="maskBtnView">
+					<img id="provBtn_rule" class="btnImage" src="assets/btn_prov.png" onclick="scrollToProv('rule')"/>
+					<img id="nextBtn_rule" class="btnImage" src="assets/btn_next.png" onclick="scrollToNext('rule')"/>
+				</div>
 			</div>
 			
 			<div id="shareMask" class="shareMask" onclick="hideShare()">
@@ -488,11 +567,11 @@
 			</div>
 			
 			<div class="columnView">
-				<img class="titleImage" src="assets/logo.png"/>
-				<label id="help1" class="targetRanking">安迪目前排名No.999</label>
+				<img class="titleImage" src="assets/logo.png" onclick="jumpPage()"/>
+				<label id="help1" class="targetRanking"></label>
 				<img class="subTitleImage" src="assets/chick.png" onclick="showProduct()"/>
 				<div id="help2" class="helpView">
-					<label id="helpLabel" class="helpLabel">已有99人为TA助力</label>
+					<label id="helpLabel" class="helpLabel"></label>
 					<img class="helpImg" src="assets/helpChicks.png"/>
 				</div>
 				<img id="play1" class="btnImage" src="assets/btn_play.png" onclick="playGame()"/>
@@ -504,6 +583,7 @@
 					<img id="play1" class="btnImage" src="assets/btn_wtzl.png" onclick="helpClick()"/>
 					<img class="btnImage" src="assets/btn_wyyw.png" onclick="clicked('rules.aspx','大胃萌宝抢奶喝')"/>
 				</div>
+				<label id="timeLabel" class="timeLabel"></label>
 			</div>
 			<img class="bgImg" src="assets/bg.jpg" />
 			<img class="ruleImage" src="assets/gz.png" onclick="showRule()"/>
