@@ -8,6 +8,7 @@
 		<title>云集有你 雅培添力</title>
 		<script src="js/mui.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<link href="css/mui.css" rel="stylesheet"/>
 		<link href="css/common.css" rel="stylesheet" />
 		<script>
@@ -108,6 +109,8 @@
 	</style>
 	<body>
 		<form id="form1" runat="server">
+			<!--此图片必须放在body标签的最前面，且高度必须为屏幕宽度的80%  -->
+			<img src="assets/chick.jpeg" style="display: none;" style="position:absolute; top:0; left:0;  width: 80%; z-index:-1;opacity: 0; ">
 			<div class="baseViewColumn">
 				<img class="point-title" src="assets/myPoint_title.png"/>
 				<div class="point-item-view" onclick="pageJump('totalPoint.html?pageType=1','大胃萌宝抢奶喝')">
@@ -122,8 +125,12 @@
 					<img class="point-item-bg" src="assets/myPoint_xas.png"/>
 					<label id="rank3" class="point-item-label"></label>
 				</div>
-				<img class="btnImage" src="assets/btn_back.png" onClick="backClick()"></img>
+				<img class="btnImage" src="assets/btn_wyyw.png" onClick="pageJump('http://www.angelyang.net/rules.aspx','大胃萌宝抢奶喝')"></img>
 			</div>
+			<!--<div style="display: none;">
+				<asp:Label ID="lbUserID" runat="server" Text="Label"></asp:Label>
+				<br />
+			</div>-->
 		</form>
 	</body>
 	<script type="text/javascript">
@@ -143,7 +150,10 @@
 		var score2 = ''		// 我的菁挚分数
 		var score3 = ''		// 我的恩美力分数
 		
+		var userId = "";			// 当前用户的ID
+		
 		$("body").ready(function () {
+			//userId = document.getElementById("lbUserID").innerHTML;
 			// 先清楚缓存
 			localStorage.clear();
 			
@@ -179,6 +189,56 @@
 			localStorage.setItem('score1', score1);
 			localStorage.setItem('score2', score2);
 			localStorage.setItem('score3', score3);
+			
+			wx.config({
+			    debug: false,
+			    appId: '<%=appId %>', 
+			    timestamp: <%=timestamp %>,
+			    nonceStr: '<%=nonceStr %>',
+			    signature: '<%=signature %>',
+			    jsApiList: [
+			      'onMenuShareTimeline',
+			      'onMenuShareAppMessage',
+			      'hideMenuItems',
+			      'showMenuItems',
+			      'hideAllNonBaseMenuItem',
+			      'showAllNonBaseMenuItem',
+			      
+			    ]
+			  });
+			
+			wx.ready(function () {
+			     wx.onMenuShareAppMessage({
+			        title: '云集有你 雅培添力', // 分享标题
+			        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
+			        link: 'http://www.angelyang.net/EnterRank.aspx', // 分享链接
+			        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
+			        type: 'link', // 分享类型,music、video或link，不填默认为link
+			        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			        success: function () { 
+			            // 用户确认分享后执行的回调函数
+			            
+			        },
+			        cancel: function () { 
+			            // 用户取消分享后执行的回调函数
+			        }
+			    });
+			    wx.onMenuShareTimeline({
+			    	 title: '云集有你 雅培添力', // 分享标题
+			        desc: '呼朋唤友来助力 惊喜好礼抢不停', // 分享描述
+			        link: 'http://www.angelyang.net/EnterRank.aspx', // 分享链接
+			        imgUrl: 'http://www.angelyang.net/chick.jpeg', // 分享图标
+			        type: 'link', // 分享类型,music、video或link，不填默认为link
+			        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			        success: function () { 
+			            // 用户确认分享后执行的回调函数
+			            
+			        },
+			        cancel: function () { 
+			            // 用户取消分享后执行的回调函数
+			        }
+			    });
+			});
 		})
 		
 		function backClick() {

@@ -245,7 +245,7 @@
 			
 			<div id="mask" class="mask">
 				<div class="gameOverMaskView">
-					<img class="maskSubView" src="assets/subBg.png" onclick="jumpUrl('https://m.yj.ink/pzWuDz')">
+					<img class="maskSubView" src="assets/subBg_hd.png" onclick="jumpUrl('https://m.yj.ink/pzWuDz')">
 					<div id="resultLabelView" class="resultLabelView">
 						<label id="resultLabel" class="resultLabel"></label>
 					</div>
@@ -352,9 +352,11 @@
 	
 	// 准备开始,倒计时3秒
 	function readyClick() {
-		if(count <= 0) {
-			alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！');
-			return;
+		if(targetId == null || targetId == "") {// 非助力
+			if(count <= 0 && targetId) {
+				alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！');
+				return;
+			}
 		}
 		
 		isGaming = false;

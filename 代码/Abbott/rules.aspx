@@ -8,6 +8,7 @@
     <title>云集有你 雅培添力</title>
     <script src="js/mui.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
     <link href="css/mui.css" rel="stylesheet"/>
 	<link href="css/common.css" rel="stylesheet" />
     <script type="text/javascript" charset="utf-8">
@@ -20,11 +21,24 @@
 			$("#provBtn_opi").css("visibility","hidden");
 			$("#provBtn_rule").css("visibility","hidden");
 			
+			var tid = getUrlParam("tid");
+			if(tid != null && tid != ""){// 助力页
+				$("#joinBtn").hide();
+				$("#helpBtn").show();
+			}else {// 非助力页
+				$("#joinBtn").show();
+				$("#helpBtn").hide();
+			}
+			
+			
 			$("#maskView").hide();
 			$("#ruleMask").hide();
 			$("#joinBtn").click(function () {
 				document.getElementById("<%=btnAgree.ClientID %>").click();
 		    })
+			$("#helpBtn").click(function () {
+				document.getElementById("<%=btnAgree.ClientID %>").click();
+			})
 		})
 		
 		/**
@@ -331,6 +345,7 @@
 				<!--<img class="btnImage" src="assets/btn_join.png" onclick="clicked('menu.html?targetId=andy','大胃萌宝抢奶喝')"></img>
 				<img class="btnImage" src="assets/btn_join.png" onclick="clicked('menu.html','大胃萌宝抢奶喝')"></img>-->
 				<img id="joinBtn" class="btnImage" src="assets/btn_join.png"></img>
+				<img id="helpBtn" class="btnImage" src="assets/btn_wlzl.png"></img>
 			</div>
 			<img class="bgImg" src="assets/bg.jpg" />
 			

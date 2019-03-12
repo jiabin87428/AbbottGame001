@@ -65,7 +65,7 @@
 			}else {
 				$("#play1").hide();
 				$("#play2").hide();
-				$("#helpLabel").html('已有' + targetcount + '人为Ta助力');
+				$("#helpLabel").html('已有' + targetcount + '人为' + targetusername + '助力');
 				var maxRank = Math.min(targetrank1, targetrank2, targetrank3);
 				$("#help1").html(targetusername + '目前最高排名：' + 'No.' + maxRank);
 				//alert('传过来的ID:' + targetID + '此页为助力页');
