@@ -32,10 +32,23 @@
 		var targetrank3 = "";		// 发起者的恩美力排名
 		var targetcount = "";		// 有多少人为发起者助力
 		
+		var isHelped = "0";			// 是否已助力过,0是否,1是是
+		
 		$("body").ready(function () {
 			userId = document.getElementById("lbUserID").innerHTML;
-			count = document.getElementById("lbCount").innerHTML;
-			$("#timeLabel").html('剩余游戏机会：' + count + '次（为朋友助力不扣游戏次数哦）');
+			isHelped = document.getElementById("lbIsT").innerHTML;
+			
+			if(localStorage.getItem('RestCount') == null) {
+				count = document.getElementById("lbCount").innerHTML;
+				localStorage.removeItem('RestCount');
+			}
+			
+			//mui.toast(count)
+			if (count <= 0) {
+				count = 0
+			}
+			
+			$("#timeLabel").html('剩余游戏机会：' + count + '次（为朋友助力不扣游戏次数哦。）');
 			
 			targetID = document.getElementById("lbTargetID").innerHTML;
 			targetusername = '<%=targetusername %>';
@@ -130,16 +143,25 @@
 		
 		window.addEventListener('pageshow', function (e) {
 			if (e.persisted) {
-				//window.location.reload();
-				//form1.submit();
-				 //window.location.replace(document.referrer);
-				  
-				var restCount = localStorage.getItem('RestCount');
-				if (restCount != null) {
-					$("#timeLabel").html('剩余游戏机会：' + restCount + '次（为朋友助力不扣游戏次数哦）');
-					// 取完值马上清除
-					localStorage.removeItem('RestCount');
+				// 在某些机器下无效
+			}
+			
+			var restCount = localStorage.getItem('RestCount');
+			var hasHelped = localStorage.getItem('HasHelped');
+			if (restCount != null) {
+				if(restCount <= 0) {
+					restCount = 0
 				}
+				$("#timeLabel").html('剩余游戏机会:' + restCount + '次（为朋友助力不扣游戏次数哦.）');
+				count = restCount;
+				// 取完值马上清除
+				//localStorage.removeItem('RestCount');
+			}
+			
+			if (hasHelped != null && hasHelped == true) {
+				isHelped = "1";
+				// 取完值马上清除
+				localStorage.removeItem('HasHelped');
 			}
 		})
 		
@@ -154,9 +176,9 @@
 		
 		// 点击为Ta助力
 		function helpClick() {
-			var isHelped = document.getElementById("lbIsT").innerHTML;
+			//var isHelped = document.getElementById("lbIsT").innerHTML;
 			if(isHelped == '1') {// 已为Ta助过力,弹出提示
-				alert('您已经为Ta助过力啦！')
+				alert('您已经为' + targetusername + '助过力啦！')
 			}else if (isHelped == '0') {// 未为Ta助过力,进入游戏页
 				document.getElementById("<%=btnGame.ClientID %>").click();
 			}
@@ -443,7 +465,7 @@
 		font-weight: 700;
 	}
 	.timeLabel {
-		width: 90%;
+		width: 100%;
 		line-height: 20px;
 		word-wrap:break-word;
 		font-size: 12px;

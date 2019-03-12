@@ -472,15 +472,25 @@
 			success:function(data){
 				mui.hideLoading();
 				count = data.Count;
+				if (count <= 0) {
+					count = 0;
+				}
 				$("#timeLabel").html('您剩余的游戏机会：' + data.Count + '次。');
-				localStorage.setItem('RestCount',count);
+				
+				if(targetId == null || targetId == "") {// 非助力
+					localStorage.setItem('RestCount',count);
+				}else {// 助力
+					localStorage.setItem('HasHelped',true);
+				}
+				
+				
 				if(targetId == null || targetId == "") {// 非助力
 					$("#play1").show();
 				}
 			},
 			error:function(xhr,type,errorThrown){
 				mui.hideLoading();
-				mui.toast('上传数据失败，网络错误！');
+				mui.toast('上传数据失败');
 				//异常处理；
 				console.log(type);
 			}
