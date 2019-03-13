@@ -161,6 +161,8 @@
 			rank2 = '<%=rank2 %>';
 			rank3 = '<%=rank3 %>';
 			
+			//alert('<%=rank1 %>');
+			
 			$("#rank1").html('排名 No.' + rank2);
 			$("#rank2").html('排名 No.' + rank3);
 			$("#rank3").html('排名 No.' + rank1);
