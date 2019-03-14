@@ -352,20 +352,7 @@
 	
 	// 准备开始,倒计时3秒
 	function readyClick() {
-		if(targetId == null || targetId == "") {// 非助力
-			if(count <= 0 && targetId) {
-				alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！');
-				return;
-			}
-		}
-		
-		isGaming = false;
-		readyTime = 3;
-		readyTimer = setInterval("readyCountDown()", 1000); 
-		var play = setTimeout("countDownAudio.play()",0);
-		//var start = setTimeout("startAudio.play()",4100);
-		readyTap.style.display = "none";
-		btnTap.style.display = "";
+		alert("游戏已经结束，感谢参与！中奖名单将在7个工作日内通过'精选超市'公众号推文公布，敬请关注。");
 	}
 	
 	function readyCountDown() {
@@ -568,7 +555,7 @@
 	
 	// 展示分享方法
 	function showShare() {
-		shareMask.style.display = "";
+		alert("游戏已经结束，感谢参与！中奖名单将在7个工作日内通过'精选超市'公众号推文公布，敬请关注。");
 	}
 	// 隐藏分享方法
 	function hideShare() {
@@ -577,20 +564,11 @@
 	
 	// 再玩一次
 	function playAgain() {
-		if(count <= 0) {
-			alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！');
-			return;
-		}
-		gameInit();
+		alert("游戏已经结束，感谢参与！中奖名单将在7个工作日内通过'精选超市'公众号推文公布，敬请关注。");
 	}
 	// 我也要玩
 	function playSelf() {
-		mui.openWindow({
-			url: 'http://www.angelyang.net/rules.aspx',
-			show:{
-			  aniShow:'none',//页面显示动画，默认为”slide-in-right“；
-			},
-		});
+		alert("游戏已经结束，感谢参与！中奖名单将在7个工作日内通过'精选超市'公众号推文公布，敬请关注。");
 	}
 	
 	// 游戏初始化

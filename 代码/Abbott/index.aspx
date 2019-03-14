@@ -166,22 +166,13 @@
 		})
 		
 		// 点击即刻参与
-		function playGame() {			
-			if(count <= 0) {
-				alert('您已无游戏机会，可以邀请好友助力增加游戏机会哦！')
-			}else{
-				document.getElementById("<%=btnGame.ClientID %>").click();
-			}
+		function playGame() {
+			alert("游戏已经结束，感谢参与！中奖名单将在7个工作日内通过'精选超市'公众号推文公布，敬请关注。");
 		}
 		
 		// 点击为Ta助力
 		function helpClick() {
-			//var isHelped = document.getElementById("lbIsT").innerHTML;
-			if(isHelped == '1') {// 已为Ta助过力,弹出提示
-				alert('您已经为' + targetusername + '助过力啦！')
-			}else if (isHelped == '0') {// 未为Ta助过力,进入游戏页
-				document.getElementById("<%=btnGame.ClientID %>").click();
-			}
+			alert("游戏已经结束，感谢参与！中奖名单将在7个工作日内通过'精选超市'公众号推文公布，敬请关注。");
 		}
 		
 		function jumpPage(url) {
